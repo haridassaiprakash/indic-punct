@@ -4,7 +4,7 @@ with open("README.md", 'r') as f:
     long_description = f.read()
 
 setup(
-    author= "Haridas Sai Prakash, Navya Nagasuri, Dipti",
+    author= "Haridas Sai Prakash, Navya Nagasuri, Dipti Dokhe",
     name="indic-punct",
     version='2.0.7',
     description='Punctuation and inverse text normalization for Indic languages and English',
