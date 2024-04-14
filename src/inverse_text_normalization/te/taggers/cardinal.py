@@ -91,33 +91,43 @@ class CardinalFst(GraphFst):
         delete_crores= pynutil.delete(koti)
         delete_space = pynini.closure(pynutil.delete(" "), 0, 1)
 
+        #T o handles the cases from 101 to 999
+        # Also handling double digit hundreds like tweleve hundred + digit/thousand/lakh/crore etc (12,456)
         hundreds= ( (graph_digit | graph_tens) + delete_space + delete_hundreds +( (delete_space + graph_tens) |
-                                                                                (pynutil.insert("0") + delete_space + graph_digit) |
+                                                                                   (pynutil.insert("0") + delete_space + graph_digit) |
                                                                                     pynutil.insert("00") ) )
-
-        nuta_graph= ( pynutil.insert("1") + delete_hundreds + delete_space+ ((pynutil.insert("0") + (graph_digit | graph_tens)) | graph_tens ))
+        # To handle the variation of hundred "నూట" and its patterns from 101-199        
+        nuta_graph= ( pynutil.insert("1") + delete_hundreds + delete_space+ ( pynutil.insert("0") + graph_digit | 
+                                                                               graph_tens ))
 
         graph_hundred_component_at_least_one_none_zero_digit = (hundred | hundreds | nuta_graph )
 
         self.graph_hundred_component_at_least_one_none_zero_digit= (graph_hundred_component_at_least_one_none_zero_digit)
-
+        
+        #If thousand reference is present, then extract the before "non thousand" part and delete "thousand"
+        #else, just add 0 and retrieve tens
+        #else, just add 00 and retrieve digits
+        #else, just add 000
         thousands = ( (graph_digit | graph_tens) + delete_space + delete_thousands + (  (delete_space + graph_hundred_component_at_least_one_none_zero_digit) |
                                                                                         (pynutil.insert("0") + delete_space + graph_tens) |
                                                                                         (pynutil.insert("00") + delete_space + graph_digit) |
                                                                                         pynutil.insert("000") ) )
-
+        
+        # To handle the variation of hundred "వెయ్యి" and its patterns from 1001-1999        
         veya_graph= ( pynutil.insert("1") + delete_thousands + delete_space+  ( (pynutil.insert("0") + delete_space + graph_tens ) |
                                                                                 (pynutil.insert("00") + graph_digit )))
 
         graph_thousands = thousand | thousands | veya_graph
-
+        
+        #lakhs graph
         lakhs = ( (graph_digit | graph_tens) + delete_space + delete_lakhs + ( (delete_space + graph_thousands) |
                                                                             (pynutil.insert("00")+ delete_space + graph_hundred_component_at_least_one_none_zero_digit) |
                                                                             (pynutil.insert("000") + delete_space + graph_tens) |
                                                                             (pynutil.insert("0000") + delete_space + graph_digit) |
                                                                                 pynutil.insert("00000") ) )
         graph_lakhs= lakh | lakhs
-
+               
+       # crores graph
         crores = ( (graph_digit | graph_tens) + delete_space + delete_crores + ( (delete_space + graph_lakhs) |
                                                                                 (pynutil.insert("00")+  delete_space + graph_thousands) |
                                                                                 (pynutil.insert("0000")+ delete_space + graph_hundred_component_at_least_one_none_zero_digit) |
@@ -125,7 +135,7 @@ class CardinalFst(GraphFst):
                                                                                 (pynutil.insert("000000") + delete_space + graph_digit) |
                                                                                 pynutil.insert("00000") ) )
         graph_crores = crore | crores
-
+        # All graph components
         fst = (  graph_zero |
                     graph_tens |
                     graph_tens_en |
