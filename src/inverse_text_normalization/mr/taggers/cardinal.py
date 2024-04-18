@@ -127,6 +127,7 @@ class CardinalFst(GraphFst):
 
         #If hazar reference is present, then extract the before "non hazar" part and delete "hazar"
         #else, just add 00
+        #to make work 1000 changes are done
         graph_thousands_component = pynini.union(
             (graph_hundred_component_at_least_one_none_zero_digit + delete_space | pynutil.insert("1", weight=-0.1)) + pynutil.delete(thousands),
             (pynutil.insert("0") + graph_hundred_component_prefix_tens),
