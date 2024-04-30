@@ -127,6 +127,7 @@ class CardinalFst(GraphFst):
 
         #If hazar reference is present, then extract the before "non hazar" part and delete "hazar"
         #else, just add 00
+        #to make work 1000 changes are done
         graph_thousands_component = pynini.union(
             (graph_hundred_component_at_least_one_none_zero_digit + delete_space | pynutil.insert("1", weight=-0.1)) + pynutil.delete(thousands),
             (pynutil.insert("0") + graph_hundred_component_prefix_tens),
@@ -157,7 +158,8 @@ class CardinalFst(GraphFst):
 
         fst_crore = fst+graph_crore # handles words like चार हज़ार करोड़
         fst_lakh = fst+graph_lakh # handles words like चार हज़ार लाख
-        fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred, graph_zero, graph_multiples, graph_char_multiples, graph_chars)
+        # fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred, graph_zero, graph_multiples, graph_char_multiples, graph_chars)
+        fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred, graph_zero, graph_multiples, graph_char_multiples, graph_chars,graph_tens_en)
         # fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred, graph_zero, graph_multiples)
 
 
