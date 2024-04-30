@@ -72,6 +72,8 @@ class CardinalFst(GraphFst):
         graph_digit = pynini.string_file(get_abs_path(data_path + "numbers/digit.tsv"))
         graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
         graph_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples.tsv"))
+        graph_tens_en = pynini.string_file(get_abs_path(data_path + "numbers/tens_en.tsv"))
+
         with open(get_abs_path(data_path + "numbers/hundred.tsv"), encoding='utf-8') as f:
             hundreds = f.readlines()
 
@@ -154,7 +156,7 @@ class CardinalFst(GraphFst):
 
         fst_crore = fst+graph_crore # handles words like चार हज़ार करोड़
         fst_lakh = fst+graph_lakh # handles words like चार हज़ार लाख
-        fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred,graph_zero,graph_chars,graph_multiples)
+        fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred,graph_zero,graph_chars,graph_multiples,graph_tens_en)
 
 
         self.graph_no_exception = fst
