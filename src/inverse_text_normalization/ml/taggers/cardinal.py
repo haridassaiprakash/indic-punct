@@ -70,6 +70,10 @@ class CardinalFst(GraphFst):
         graph_zero = pynini.string_file(get_abs_path(data_path + "numbers/zero.tsv"))
         graph_tens = pynini.string_file(get_abs_path(data_path + "numbers/tens.tsv"))
         graph_digit = pynini.string_file(get_abs_path(data_path + "numbers/digit.tsv"))
+        graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
+        graph_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples.tsv"))
+        malayalam_hundreds = pynini.string_file(get_abs_path(data_path + "numbers/ml_hundreds.tsv"))
+        graph_tens_en = pynini.string_file(get_abs_path(data_path + "numbers/tens_en.tsv"))
 
         with open(get_abs_path(data_path + "numbers/hundred.tsv"), encoding='utf-8') as f:
             hundreds = f.readlines()
@@ -98,10 +102,17 @@ class CardinalFst(GraphFst):
             crores = f.readlines()
         crore = crores[0].strip()
 
-        graph_hundred = pynini.cross(hundred, "00") | pynini.cross(hundred_alt, "00")
-        graph_crore = pynini.cross(crore, "0000000")
-        graph_lakh = pynini.cross(lakh, "00000")
-        graph_thousand = pynini.cross(thousand, "000")
+        graph_hundred = pynini.cross(hundred, "100") | pynini.cross(hundred_alt, "100") | pynini.cross(hundred_alt_2, "100") | pynini.cross(hundred_alt_3, "100") | pynini.cross(hundred_alt_4, "100") | pynini.cross(hundred_alt_5, "100") | pynini.cross(hundred_alt_6, "100") | pynini.cross(hundred_alt_7, "100") | pynini.cross(hundred_alt_8, "100")
+        graph_crore = pynini.cross(crore, "10000000")
+        graph_lakh = pynini.cross(lakh, "100000") | pynini.cross(lakh_alt, "100000")
+        graph_thousand = pynini.cross(thousand, "1000") | pynini.cross(thousand_alt, "1000")
+        
+        # In malayalam hundreds are said as a combined word എണ്ണൂറ് "ennur" instead of എട്ട് നൂറ് "ett nooru" --> (800)
+        # to handle that cases malayalam_hundreds_component is created
+        malayalam_hundreds_component = ( malayalam_hundreds + ( (delete_space + graph_tens) |
+                                                           (pynutil.insert("0") + delete_space + graph_digit) |
+                                                            pynutil.insert("00") ) )
+
 
         graph_hundred_component = pynini.union(graph_digit + delete_space + (pynutil.delete(hundred) | pynutil.delete(hundred_alt) | pynutil.delete(hundred_alt_2)
                                   | pynutil.delete(hundred_alt_3) | pynutil.delete(hundred_alt_4) | pynutil.delete(hundred_alt_5) | pynutil.delete(hundred_alt_6)
@@ -161,7 +172,7 @@ class CardinalFst(GraphFst):
 
         fst_crore = fst+graph_crore # handles words like चार हज़ार करोड़
         fst_lakh = fst+graph_lakh # handles words like चार हज़ार लाख
-        fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred)
+        fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred,graph_zero,graph_chars,graph_multiples,malayalam_hundreds_component,graph_tens_en)
 
 
         self.graph_no_exception = fst
