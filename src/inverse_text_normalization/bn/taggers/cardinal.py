@@ -70,6 +70,9 @@ class CardinalFst(GraphFst):
         graph_zero = pynini.string_file(get_abs_path(data_path + "numbers/zero.tsv"))
         graph_tens = pynini.string_file(get_abs_path(data_path + "numbers/tens.tsv"))
         graph_digit = pynini.string_file(get_abs_path(data_path + "numbers/digit.tsv"))
+        graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
+        graph_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples.tsv"))
+        graph_tens_en = pynini.string_file(get_abs_path(data_path + "numbers/tens_en.tsv"))
 
         with open(get_abs_path(data_path + "numbers/hundred.tsv"), encoding='utf-8') as f:
             hundreds = f.readlines()
@@ -92,10 +95,10 @@ class CardinalFst(GraphFst):
             crores = f.readlines()
         crore = crores[0].strip()
 
-        graph_hundred = pynini.cross(hundred, "00") | pynini.cross(hundred_alt, "00") | pynini.cross(hundred_alt_2, "00")
-        graph_crore = pynini.cross(crore, "0000000")
-        graph_lakh = pynini.cross(lakh, "00000")
-        graph_thousand  = pynini.cross(thousand, "000")
+        graph_hundred = pynini.cross(hundred, "100") | pynini.cross(hundred_alt, "100") | pynini.cross(hundred_alt_2, "100")
+        graph_crore = pynini.cross(crore, "10000000")
+        graph_lakh = pynini.cross(lakh, "100000")
+        graph_thousand  = pynini.cross(thousand, "1000")
 
         graph_hundred_component = pynini.union(graph_digit + delete_space +( pynutil.delete(hundred) | pynutil.delete(hundred_alt) | pynutil.delete(hundred_alt_2))  + delete_space,
                                                pynutil.insert("0"))
@@ -153,7 +156,7 @@ class CardinalFst(GraphFst):
 
         fst_crore = fst+graph_crore # handles words like चार हज़ार करोड़
         fst_lakh = fst+graph_lakh # handles words like चार हज़ार लाख
-        fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred)
+        fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred,graph_zero,graph_chars,graph_multiples,graph_tens_en)
 
 
         self.graph_no_exception = fst
