@@ -15,9 +15,9 @@
 # from inverse_text_normalization.lang_params import LANG
 
 # lang_taggers = f'inverse_text_normalization.taggers.{LANG}_taggers'
-lang_taggers = 'inverse_text_normalization.pa.taggers'
+lang_taggers = 'inverse_text_normalization.pan.taggers'
 
-from inverse_text_normalization.pa.graph_utils import GraphFst
+from inverse_text_normalization.pan.graph_utils import GraphFst
 exec(f"from {lang_taggers}.cardinal import CardinalFst")
 exec(f"from {lang_taggers}.date import DateFst")
 exec(f"from {lang_taggers}.decimal import DecimalFst")

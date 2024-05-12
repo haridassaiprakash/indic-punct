@@ -16,7 +16,7 @@ class PunjabiInverseTextNormalization(unittest.TestCase):
         data = ['ਮੇਰੇ ਕੋਲ ਚਾਰ ਬੈਗ ਹਨ', 'ਰੀਟਾ ਅਗਲੇ ਮਹੀਨੇ ਅੱਠ ਸ਼ਹਿਰਾਂ ਵਿੱਚ ਜਾਵੇਗੀ', 'ਦੋ']
         expected_output = ['ਮੇਰੇ ਕੋਲ 4 ਬੈਗ ਹਨ', 'ਰੀਟਾ ਅਗਲੇ ਮਹੀਨੇ 8 ਸ਼ਹਿਰਾਂ ਵਿੱਚ ਜਾਵੇਗੀ', '2']
 
-        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pa')
+        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pan')
         inverse_normalizer_prediction = [sent.replace('\r', '') for sent in inverse_normalizer_prediction]
 
         self.assertEqual(expected_output, inverse_normalizer_prediction)
@@ -30,7 +30,7 @@ class PunjabiInverseTextNormalization(unittest.TestCase):
                            'ਮੇਰੇ ਕੋਲ 40 ਗਲਾਸ ਹਨ',
                            '87']
 
-        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pa')
+        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pan')
         inverse_normalizer_prediction = [sent.replace('\r', '') for sent in inverse_normalizer_prediction]
 
         self.assertEqual(expected_output, inverse_normalizer_prediction)
@@ -45,7 +45,7 @@ class PunjabiInverseTextNormalization(unittest.TestCase):
                            '982'
                            ]
 
-        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pa')
+        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pan')
 
         inverse_normalizer_prediction = [sent.replace('\r', '') for sent in inverse_normalizer_prediction]
 
@@ -63,7 +63,7 @@ class PunjabiInverseTextNormalization(unittest.TestCase):
                            '12,703',
                            '1,420']
 
-        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pa')
+        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pan')
 
         inverse_normalizer_prediction = [sent.replace('\r', '') for sent in inverse_normalizer_prediction]
 
@@ -74,7 +74,7 @@ class PunjabiInverseTextNormalization(unittest.TestCase):
                 'ਬਾਰਾਂ ਲੱਖ ਵੀਹ ਹਜਾਰ ਸੱਤ ਸੌ ਪੰਦਰਾਂ']
         expected_output = ['2,00,000', '2,00,700', '4,00,404', '12,20,715']
 
-        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pa')
+        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pan')
 
         inverse_normalizer_prediction = [sent.replace('\r', '') for sent in inverse_normalizer_prediction]
 
@@ -84,7 +84,7 @@ class PunjabiInverseTextNormalization(unittest.TestCase):
         data = ['ਚਾਰ ਕਰੋੜ ਇੱਕੀ ਲੱਖ', 'ਚਾਰ ਕਰੋੜ ਇੱਕੀ ਲੱਖ ਚਾਰ ਹਜਾਰ ਛੇ ਸੌ ਸੱਤ']
         expected_output = ['4,21,00,000', '4,21,04,607']
 
-        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pa')
+        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pan')
 
         inverse_normalizer_prediction = [sent.replace('\r', '') for sent in inverse_normalizer_prediction]
 
@@ -95,7 +95,7 @@ class PunjabiInverseTextNormalization(unittest.TestCase):
         data = ['ਸਾਲ ਉਨੀ ਸੌ ਚੌਹੱਤਰ', 'ਲੇਖਾਂ ਦੀ ਗਿਣਤੀ ਇੱਕ ਹਜਾਰ ਨੌ ਸੌ ਚੌਹੱਤਰ ਹੈ', 'ਇਕਵਿੰਜਾ ਸੌ ਬਾਈ']
         expected_output = ['ਸਾਲ 1,974', 'ਲੇਖਾਂ ਦੀ ਗਿਣਤੀ 1,974 ਹੈ', '5,122']
 
-        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pa')
+        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pan')
 
         inverse_normalizer_prediction = [sent.replace('\r', '') for sent in inverse_normalizer_prediction]
 
@@ -105,7 +105,7 @@ class PunjabiInverseTextNormalization(unittest.TestCase):
         data = ['ਉਸਨੂੰ ਤਿੰਨ ਹਜਾਰ ਡਾਲਰ ਦਿਓ', 'ਉਸਨੂੰ ਦੋ ਸੌ ਯੂਰੋ ਦਿਓ', 'ਮੇਰੇ ਕੋਲ ਦਸ ਰੁਪਏ ਹਨ']
         expected_output = ['ਉਸਨੂੰ $ 3,000 ਦਿਓ', 'ਉਸਨੂੰ € 200 ਦਿਓ', 'ਮੇਰੇ ਕੋਲ ₹ 10 ਹਨ']
 
-        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pa')
+        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pan')
 
         inverse_normalizer_prediction = [sent.replace('\r', '') for sent in inverse_normalizer_prediction]
 
@@ -115,7 +115,7 @@ class PunjabiInverseTextNormalization(unittest.TestCase):
         data = ['ਸਤਾਸੀ ਦਸ਼ਮਲਵ ਸਿਫਰ ਸਿਫਰ ਸਿਫਰ ਤਿੰਨ', 'ਚਾਰ ਕਰੋੜ ਇੱਕੀ ਲੱਖ ਦਸ਼ਮਲਵ ਸੱਤ ਸਿਫਰ ਇੱਕ']
         expected_output = ['87.0003', '4,21,00,000.701']
 
-        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pa')
+        inverse_normalizer_prediction = inverse_normalize_text(data, lang='pan')
 
         inverse_normalizer_prediction = [sent.replace('\r', '') for sent in inverse_normalizer_prediction]
 

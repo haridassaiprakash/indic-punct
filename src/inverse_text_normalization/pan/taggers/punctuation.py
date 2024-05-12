@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from inverse_text_normalization.pa.graph_utils import GraphFst, convert_space
+from inverse_text_normalization.pan.graph_utils import GraphFst, convert_space
 
 try:
     import pynini

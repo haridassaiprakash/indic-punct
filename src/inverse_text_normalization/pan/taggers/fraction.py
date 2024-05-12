@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from inverse_text_normalization.pa.graph_utils import GraphFst
+from inverse_text_normalization.pan.graph_utils import GraphFst
 
 
-class TelefoneFst(GraphFst):
+class FractionFst(GraphFst):
     """
-    Finite state transducer for classifying telephone
+    Finite state transducer for classifying fraction
     """
 
     def __init__(self):
-        super().__init__(name="telefone", kind="classify")
-        # country code (++), number_part, extension
+        super().__init__(name="fraction", kind="classify")
+        # integer_part # numerator # denominator

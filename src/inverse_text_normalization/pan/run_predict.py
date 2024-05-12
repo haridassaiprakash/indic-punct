@@ -15,7 +15,7 @@
 from argparse import ArgumentParser
 from typing import List
 
-from inverse_text_normalization.pa.inverse_normalize import INVERSE_NORMALIZERS
+from inverse_text_normalization.pan.inverse_normalize import INVERSE_NORMALIZERS
 # from nemo_text_processing.inverse_text_normalization.inverse_normalize import InverseNormalizer
 
 '''

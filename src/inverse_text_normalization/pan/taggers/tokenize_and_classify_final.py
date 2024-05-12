@@ -15,9 +15,9 @@
 # from inverse_text_normalization.lang_params import LANG
 
 # lang_taggers = f'inverse_text_normalization.taggers.{LANG}_taggers'
-lang_taggers = 'inverse_text_normalization.pa.taggers'
+lang_taggers = 'inverse_text_normalization.pan.taggers'
 
-from inverse_text_normalization.pa.graph_utils import GraphFst, delete_extra_space, delete_space
+from inverse_text_normalization.pan.graph_utils import GraphFst, delete_extra_space, delete_space
 exec(f"from {lang_taggers}.punctuation import PunctuationFst")
 exec(f"from {lang_taggers}.tokenize_and_classify import ClassifyFst")
 

@@ -12,14 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from inverse_text_normalization.pa.graph_utils import GraphFst
+from inverse_text_normalization.pan.graph_utils import GraphFst
 
 
-class ElectronicFst(GraphFst):
+class TelefoneFst(GraphFst):
     """
-    Finite state transducer for classifying electronic
+    Finite state transducer for classifying telephone
     """
 
     def __init__(self):
-        super().__init__(name="electronic", kind="classify")
-        # protocol, username, password, domain,port, path, query_string, fragment_id     protocol://username:password@domain:port/path?query_string#fragment_id
+        super().__init__(name="telefone", kind="classify")
+        # country code (++), number_part, extension

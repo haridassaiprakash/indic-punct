@@ -15,7 +15,7 @@
 from typing import Union
 
 import inflect
-from inverse_text_normalization.pa.data_loader_utils import get_abs_path
+from inverse_text_normalization.pan.data_loader_utils import get_abs_path
 _inflect = inflect.engine()
 
 data_path = 'data/numbers/'

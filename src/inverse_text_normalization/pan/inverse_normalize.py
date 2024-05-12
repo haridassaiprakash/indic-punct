@@ -19,13 +19,13 @@ from typing import List
 
 # from inverse_text_normalization.lang_params import LANG
 # lang_taggers = f'inverse_text_normalization.taggers.{LANG}_taggers'
-# lang_taggers = 'inverse_text_normalization.pa.taggers.hi_taggers'
+# lang_taggers = 'inverse_text_normalization.pan.taggers.hi_taggers'
 
 # exec(f"from {lang_taggers}.tokenize_and_classify_final import ClassifyFinalFst")
 
-from inverse_text_normalization.pa.taggers.tokenize_and_classify_final import ClassifyFinalFst
-from inverse_text_normalization.pa.token_parser import PRESERVE_ORDER_KEY, TokenParser
-from inverse_text_normalization.pa.verbalizers.verbalize_final import VerbalizeFinalFst
+from inverse_text_normalization.pan.taggers.tokenize_and_classify_final import ClassifyFinalFst
+from inverse_text_normalization.pan.token_parser import PRESERVE_ORDER_KEY, TokenParser
+from inverse_text_normalization.pan.verbalizers.verbalize_final import VerbalizeFinalFst
 from tqdm import tqdm
 
 try:

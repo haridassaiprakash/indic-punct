@@ -16,15 +16,15 @@
 import pynini
 from pynini.lib import pynutil, utf8
 
-from inverse_text_normalization.pa.data_loader_utils import get_abs_path
-from inverse_text_normalization.pa.graph_utils import (
+from inverse_text_normalization.pan.data_loader_utils import get_abs_path
+from inverse_text_normalization.pan.graph_utils import (
     NEMO_DIGIT,
     NEMO_SIGMA,
     NEMO_SPACE,
     GraphFst,
     delete_space,
 )
-from inverse_text_normalization.pa.utils import num_to_word
+from inverse_text_normalization.pan.utils import num_to_word
 
 # from inverse_text_normalization.lang_params import LANG
 # data_path = f'data/{LANG}_data/'

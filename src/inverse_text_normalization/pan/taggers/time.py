@@ -13,8 +13,8 @@
 # limitations under the License.
 
 
-from inverse_text_normalization.pa.data_loader_utils import get_abs_path
-from inverse_text_normalization.pa.graph_utils import (
+from inverse_text_normalization.pan.data_loader_utils import get_abs_path
+from inverse_text_normalization.pan.graph_utils import (
     GraphFst,
     convert_space,
     delete_extra_space,
@@ -29,9 +29,9 @@ from inverse_text_normalization.pa.graph_utils import (
 lang_data_path = 'data/'
 # lang_taggers = 'inverse_text_normalization.taggers.hi_taggers'
 # exec(f"from {lang_taggers}.cardinal import CardinalFst")
-from inverse_text_normalization.pa.taggers.cardinal import CardinalFst
+from inverse_text_normalization.pan.taggers.cardinal import CardinalFst
 # from taggers.cardinal import CardinalFst
-from inverse_text_normalization.pa.utils import num_to_word
+from inverse_text_normalization.pan.utils import num_to_word
 
 try:
     import pynini

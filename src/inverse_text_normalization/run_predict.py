@@ -3,7 +3,8 @@ from inverse_text_normalization.en.run_predict import inverse_normalize_text as 
 from inverse_text_normalization.gu.run_predict import inverse_normalize_text as gu_itn
 from inverse_text_normalization.te.run_predict import inverse_normalize_text as te_itn
 from inverse_text_normalization.mr.run_predict import inverse_normalize_text as mr_itn
-from inverse_text_normalization.pa.run_predict import inverse_normalize_text as pa_itn
+# from inverse_text_normalization.pa.run_predict import inverse_normalize_text as pa_itn
+from inverse_text_normalization.pan.run_predict import inverse_normalize_text as pan_itn
 from inverse_text_normalization.ta.run_predict import inverse_normalize_text as ta_itn
 # from inverse_text_normalization.ta.run_predict import inverse_normalize_text as ta_itn
 from inverse_text_normalization.bn.run_predict import inverse_normalize_text as bn_itn
@@ -84,7 +85,8 @@ def inverse_normalize_text(text_list, lang):
     # elif lang == 'pa':
     elif lang == 'pan':
 
-        itn_results = pa_itn(text_list)
+        # itn_results = pa_itn(text_list)
+        itn_results = pan_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
 
