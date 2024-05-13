@@ -73,6 +73,7 @@ class CardinalFst(GraphFst):
         tamil_graph_lakh_digit = pynini.string_file(get_abs_path(data_path + "numbers/ta_lakh_digit.tsv"))
         tamil_graph_crore_digit = pynini.string_file(get_abs_path(data_path + "numbers/ta_crore_digit.tsv"))
         tamil_graph_exception_list = pynini.string_file(get_abs_path(data_path + "numbers/ta_exceptions.tsv"))
+        tamil_hundreds = pynini.string_file(get_abs_path(data_path + "numbers/ta_hundreds.tsv"))
 
         graph_zero = pynini.string_file(get_abs_path(data_path + "numbers/zero.tsv"))  
         graph_digit = pynini.string_file(get_abs_path(data_path + "numbers/digit.tsv"))
@@ -88,33 +89,34 @@ class CardinalFst(GraphFst):
         tamil_crores = pynini.accep('கோடி') | pynini.accep('கோடியே')
 
         cents = pynini.accep("ஹண்ட்ரட்‌") | pynini.accep("ஹண்ட்ரெட்‌") | pynini.accep("ஹன்ட்ரட்‌") | pynini.accep("ஹன்ட்ரெட்‌")
-        thousands = pynini.accep("தவுசண்ட்‌") | pynini.accep("தௌசண்ட்‌")
+        thousands = pynini.accep("தவுசண்ட்‌") | pynini.accep("தௌசண்ட்‌") | pynini.accep("தௌசண்ட்‌")
         lakhs = pynini.accep("லேக்‌") | pynini.accep("லாக்‌")
         crores = pynini.accep("க்ரோர்‌")
 
         del_And = pynutil.delete(pynini.closure(pynini.accep("அண்ட்‌"), 1 ,1 ))
 
-        tamil_graph_hundred = pynini.cross("நூறு", "100") | pynini.cross("இருநூறு", "200") | pynini.cross("எரணூறு", "200") |\
-                               pynini.cross("முந்நூறு", "300") | pynini.cross("நானூறு", "400") | pynini.cross("ஐநூறு", "500") |\
-                               pynini.cross("அறுநூறு", "600") | pynini.cross("எழுநூறு", "700") | pynini.cross("எண்ணூறு","800") | pynini.cross("தொள்ளாயிரம்‌", "900")
+        tamil_graph_hundred = pynini.cross("நூறு", "100") | pynini.cross("நூற்றி", "100") | pynini.cross("இருநூறு", "200") | pynini.cross("இரநூற்றி", "200") | pynini.cross("இருநூற்றி", "200") | pynini.cross("எரணூறு", "200") |\
+                               pynini.cross("முந்நூறு", "300") | pynini.cross("முன்னூறு", "300") | pynini.cross("முன்னூற்றி", "300") | pynini.cross("நானூறு", "400") | pynini.cross("நானூற்றி", "400") | pynini.cross("ஐநூறு", "500") | pynini.cross("ஐநூற்றி", "500") |\
+                               pynini.cross("அறுநூறு", "600") | pynini.cross("அறுநூற்றி", "600") | pynini.cross("ஆறுநூற்றி", "600") | pynini.cross("அறநூற்றி", "600") | pynini.cross("எழுநூறு", "700") | pynini.cross("எண்ணூறு","800") | pynini.cross("தொள்ளாயிரம்‌", "900") | pynini.cross("தொள்ளாயிரம்", "900")
         tamil_graph_nine_hundred = pynini.cross("தொள்ளாயிரத்து", "9") | pynini.cross("தொள்ளாயிரத்தி" , "9")
+
         tamil_graph_thousands = pynini.cross("ஆயிரம்" , "1000")
         tamil_graph_lakhs = pynini.cross("ஒரு லட்சம்", "100000") | pynini.cross("லட்சம்", "100000")
         tamil_graph_crores = pynini.cross("ஒரு கோடி", "10000000") | pynini.cross("கோடி", "10000000")
 
         graph_hundred = pynini.cross("ஹண்ட்ரட்‌", "100") | pynini.cross("ஹண்ட்ரெட்‌", "100") | pynini.cross("ஹன்ட்ரட்‌", "100") | pynini.cross("ஹன்ட்ரெட்‌", "100")
-        graph_thousand  = pynini.cross("தவுசண்ட்‌", "1000") | pynini.cross("தௌசண்ட்‌", "1000")
+        graph_thousand  = pynini.cross("தவுசண்ட்‌", "1000") | pynini.cross("தௌசண்ட்‌", "1000") | pynini.cross("தௌஸண்ட்", "1000")
         graph_lakh = pynini.cross("லேக்‌", "100000") | pynini.cross("லாக்‌", "100000")
         graph_crore = pynini.cross("க்ரோர்‌", "10000000")
         
 
-        #Handles 1-999 (direct spoken)
-        tamil_graph_hundred_component = pynini.union(tamil_graph_hundred_digit + pynutil.delete(tamil_cents) + delete_space,
-                                                     tamil_graph_nine_hundred + delete_space,
-                                                      pynutil.insert("0"))
-        tamil_graph_hundred_component += pynini.union(tamil_graph_tens, 
-                                                      pynutil.insert("0") + (tamil_graph_digit | pynutil.insert("0")))
-
+        #Handles 1-999 (direct spoken) 
+        # In tamil sometimes the hundreds are said as a combined word முந்நூறு "Munnooru" -->300 instead of மூன்று நூறு "moondru nooru" --> 3 100
+        # to handle that cases tamil_graph_hundred_component is created
+        tamil_graph_hundred_component = ( tamil_hundreds + ( (delete_space + tamil_graph_tens) |
+                                                               (pynutil.insert("0") + delete_space + tamil_graph_digit) |
+                                                                pynutil.insert("00") ) )
+        
         #Handles double digit hundred (like उन्निस सौ) -> Are these present in Tamil??
         ### These variations dont occur in Tamil
 
@@ -192,6 +194,8 @@ class CardinalFst(GraphFst):
             + (delete_space)
             + (tamil_graph_hundred_component | pynutil.insert("", weight=0.1)),
             graph_zero,
+            tamil_graph_tens,
+            tamil_graph_digit
         )
 
         fst_en = pynini.union(
@@ -206,8 +210,8 @@ class CardinalFst(GraphFst):
         fst_crore = fst_en+graph_crore # handles words like चार हज़ार करोड़
         fst_lakh = fst_en+graph_lakh # handles words like चार हज़ार लाख
 
-        fst = pynini.union(fst_tam, tamil_graph_crores , tamil_graph_lakhs, tamil_graph_thousands, tamil_graph_hundred, tamil_graph_exception_list,
-                           fst_en, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred, graph_multiples)
+        fst = pynini.union(fst_tam, tamil_graph_crores , tamil_graph_lakhs, tamil_graph_thousands, tamil_graph_exception_list,
+                           fst_en, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred,tamil_graph_hundred, graph_multiples,graph_chars,graph_char_multiples, graph_tens_en)
 
         self.graph_no_exception = fst
         self.graph = fst
