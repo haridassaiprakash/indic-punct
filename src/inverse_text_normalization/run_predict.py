@@ -82,8 +82,8 @@ def inverse_normalize_text(text_list, lang):
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
 
-    # elif lang == 'pa':
-    elif lang == 'pan':
+    elif lang == 'pa':
+    # elif lang == 'pan':
 
         # itn_results = pa_itn(text_list)
         itn_results = pan_itn(text_list)
