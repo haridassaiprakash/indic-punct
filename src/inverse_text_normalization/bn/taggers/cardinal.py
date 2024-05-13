@@ -100,7 +100,7 @@ class CardinalFst(GraphFst):
         graph_lakh = pynini.cross(lakh, "100000")
         graph_thousand  = pynini.cross(thousand, "1000")
 
-        graph_hundred_component = pynini.union(graph_digit + delete_space +( pynutil.delete(hundred) | pynutil.delete(hundred_alt) | pynutil.delete(hundred_alt_2))  + delete_space,
+        graph_hundred_component = pynini.union((graph_digit | pynutil.insert("1")) + delete_space +( pynutil.delete(hundred) | pynutil.delete(hundred_alt) | pynutil.delete(hundred_alt_2))  + delete_space,
                                                pynutil.insert("0"))
         graph_hundred_component += pynini.union(graph_tens, pynutil.insert("0") + (graph_digit | pynutil.insert("0")))
 
