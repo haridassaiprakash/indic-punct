@@ -13,10 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from inverse_text_normalization.pa.graph_utils import GraphFst, delete_extra_space, delete_space
-from inverse_text_normalization.pa.verbalizers.punctuation import PunctuationFst
-from inverse_text_normalization.pa.verbalizers.verbalize import VerbalizeFst
-from inverse_text_normalization.pa.verbalizers.word import WordFst
+from inverse_text_normalization.pan.graph_utils import GraphFst, delete_extra_space, delete_space
+from inverse_text_normalization.pan.verbalizers.punctuation import PunctuationFst
+from inverse_text_normalization.pan.verbalizers.verbalize import VerbalizeFst
+from inverse_text_normalization.pan.verbalizers.word import WordFst
 
 try:
     import pynini

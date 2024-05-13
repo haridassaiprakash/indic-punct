@@ -13,15 +13,15 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from inverse_text_normalization.pa.graph_utils import GraphFst
-from inverse_text_normalization.pa.verbalizers.cardinal import CardinalFst
-from inverse_text_normalization.pa.verbalizers.date import DateFst
-from inverse_text_normalization.pa.verbalizers.decimal import DecimalFst
-from inverse_text_normalization.pa.verbalizers.measure import MeasureFst
-from inverse_text_normalization.pa.verbalizers.money import MoneyFst
-from inverse_text_normalization.pa.verbalizers.ordinal import OrdinalFst
-from inverse_text_normalization.pa.verbalizers.time import TimeFst
-from inverse_text_normalization.pa.verbalizers.whitelist import WhiteListFst
+from inverse_text_normalization.pan.graph_utils import GraphFst
+from inverse_text_normalization.pan.verbalizers.cardinal import CardinalFst
+from inverse_text_normalization.pan.verbalizers.date import DateFst
+from inverse_text_normalization.pan.verbalizers.decimal import DecimalFst
+from inverse_text_normalization.pan.verbalizers.measure import MeasureFst
+from inverse_text_normalization.pan.verbalizers.money import MoneyFst
+from inverse_text_normalization.pan.verbalizers.ordinal import OrdinalFst
+from inverse_text_normalization.pan.verbalizers.time import TimeFst
+from inverse_text_normalization.pan.verbalizers.whitelist import WhiteListFst
 
 
 class VerbalizeFst(GraphFst):

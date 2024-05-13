@@ -22,7 +22,7 @@ data_path = 'data/'
 
 try:
     import pynini
-    from inverse_text_normalization.mr.data_loader_utils import get_abs_path
+    from inverse_text_normalization.pan.data_loader_utils import get_abs_path
     from pynini import Far
     from pynini.examples import plurals
     from pynini.lib import byte, pynutil, utf8

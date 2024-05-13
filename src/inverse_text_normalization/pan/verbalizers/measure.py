@@ -13,9 +13,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from inverse_text_normalization.pa.graph_utils import NEMO_CHAR, GraphFst, delete_space
-from inverse_text_normalization.pa.verbalizers.cardinal import CardinalFst
-from inverse_text_normalization.pa.verbalizers.decimal import DecimalFst
+from inverse_text_normalization.pan.graph_utils import NEMO_CHAR, GraphFst, delete_space
+from inverse_text_normalization.pan.verbalizers.cardinal import CardinalFst
+from inverse_text_normalization.pan.verbalizers.decimal import DecimalFst
 
 try:
     import pynini

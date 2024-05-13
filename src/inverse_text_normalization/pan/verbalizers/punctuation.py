@@ -13,7 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from inverse_text_normalization.pa.graph_utils import (
+from inverse_text_normalization.pan.graph_utils import (
     NEMO_CHAR,
     NEMO_NOT_QUOTE,
     GraphFst,
