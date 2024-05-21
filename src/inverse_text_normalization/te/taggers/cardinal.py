@@ -124,7 +124,7 @@ class CardinalFst(GraphFst):
                                                                                                 pynutil.insert("00000") ) )
         graph_lakhs = lakh | lakhs
 
-       # crores graph
+       # similarly crores graph
         crores = ( (graph_digit | graph_tens | graph_tens_en) + delete_space + delete_crores + ( (delete_space + graph_lakhs) |
                                                                                 (pynutil.insert("00")+  delete_space + graph_thousands) |
                                                                                 (pynutil.insert("0000")+ delete_space + graph_hundred_component_at_least_one_none_zero_digit) |
