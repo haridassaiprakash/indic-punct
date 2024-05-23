@@ -79,18 +79,19 @@ class CardinalFst(GraphFst):
         cents = pynini.accep("వంద") | pynini.accep("వందలు") | pynini.accep("వందల") | pynini.accep("నూట") | pynini.accep("హండ్రెడ్")
         veya = pynini.accep("వెయ్యి") | pynini.accep("వేలు") | pynini.accep("వేల") | pynini.accep("వెయ్య") | pynini.accep("థౌసండ్")
         laksha = pynini.accep("లక్ష") | pynini.accep("లక్షల") | pynini.accep("లక్షలు") | pynini.accep("ల్యాక్") | pynini.accep("ల్యాక్స్")
-        koti = pynini.accep("కోటి") | pynini.accep("కోట్లు") | pynini.accep("కోట్ల") | pynini.accep("క్రోర్")
+        koti = pynini.accep("కోటి") | pynini.accep("కోట్లు") | pynini.accep("కోట్ల") | pynini.accep("క్రోర్") | pynini.accep("క్రోర్స్")
 
         hundred = pynini.cross("వంద", "100") | pynini.cross("వందలు", "100") | pynini.cross("వందల", "100") | pynini.cross("నూట", "100") | pynini.cross("హండ్రెడ్", "100")
         thousand  = pynini.cross("వెయ్యి", "1000") | pynini.cross("వేలు", "1000") | pynini.cross("వేల", "1000") | pynini.cross("వెయ్య", "1000") | pynini.cross("థౌసండ్", "1000")
-        lakh = pynini.cross("లక్ష", "100000") | pynini.cross("లక్షల", "100000") | pynini.cross("లక్షలు", "100000") | pynini.cross("ల్యాక్", "100000") | pynini.cross("ల్యాక్స్", "100000")
-        crore = pynini.cross("కోటి", "10000000") | pynini.cross("కోట్లు", "10000000") | pynini.cross("కోట్ల", "10000000")  | pynini.cross("క్రోర్", "10000000")
+        lakh = pynini.cross("లక్ష", "100000") | pynini.cross("లక్షల", "100000") | pynini.cross("లక్షలు", "100000") | pynini.cross("ల్యాక్స్", "100000") | pynini.cross("ల్యాక్", "100000")
+        crore = pynini.cross("కోటి", "10000000") | pynini.cross("కోట్లు", "10000000") | pynini.cross("కోట్ల", "10000000") | pynini.cross("క్రోర్", "10000000") | pynini.cross("క్రోర్స్", "10000000")
 
         delete_hundreds= pynutil.delete(cents)
         delete_thousands= pynutil.delete(veya)
         delete_lakhs= pynutil.delete(laksha)
         delete_crores= pynutil.delete(koti)
         delete_space = pynini.closure(pynutil.delete(" "), 0, 1)
+
         del_And = pynutil.delete(pynini.closure(pynini.accep("అండ్"), 1 ,1 ))
 
         # To handles the cases from 200 to 999
@@ -98,6 +99,7 @@ class CardinalFst(GraphFst):
         hundreds= ( (graph_digit | graph_tens | graph_tens_en) + delete_space + delete_hundreds + (delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en) |
                                                                                                                                                            (pynutil.insert("0") + graph_digit) |
                                                                                                                                                             pynutil.insert("00") ) 
+       
         # in telugu నూట is used for 100 so the below graph is created for 101 to 199
         nuta_graph= ( pynutil.insert("1") + delete_hundreds + (delete_space + del_And + delete_space | delete_space) + ( pynutil.insert("0") + graph_digit | graph_tens | graph_tens_en))
 
@@ -132,6 +134,7 @@ class CardinalFst(GraphFst):
                                                                                 (pynutil.insert("000000") + delete_space + graph_digit) |
                                                                                 pynutil.insert("00000") ) )
         graph_crores = crore | crores
+ 
         # All graph components
         fst = (  graph_zero |
                     graph_tens |

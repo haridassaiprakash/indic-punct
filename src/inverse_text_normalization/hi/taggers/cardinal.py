@@ -76,27 +76,27 @@ class CardinalFst(GraphFst):
 
         cents = pynini.accep("सौ") | pynini.accep("हंड्रेड") | pynini.accep("हन्ड्रड")
         thousands = pynini.accep("थाउज़न्ड") | pynini.accep("हज़ार") | pynini.accep("थाउज़ेंड") | pynini.accep("हजार") | pynini.accep("थाउजेंड")
-        lakhs = pynini.accep("लाख") | pynini.accep("लैक") | pynini.accep("लेक")
+        lakhs = pynini.accep("लाख") | pynini.accep("लैक") | pynini.accep("लेक") | pynini.accep("लाक")
         crores = pynini.accep("करोड़") | pynini.accep("क्रोर")
 
         del_And = pynutil.delete(pynini.closure(pynini.accep("एंड"), 1 ,1 ))
         
         graph_hundred = pynini.cross("सौ", "100") | pynini.cross("हंड्रेड", "100") | pynini.cross("हन्ड्रड", "100")
         graph_thousand  = pynini.cross("हज़ार", "1000") | pynini.cross("थाउज़न्ड", "1000") | pynini.cross("थाउज़ेंड", "1000") | pynini.cross("थाउजेंड", "1000") | pynini.cross("हजार", "1000")
-        graph_lakh = pynini.cross("लाख", "100000") | pynini.cross("लैक", "100000") | pynini.cross("लेक", "100000")
+        graph_lakh = pynini.cross("लाख", "100000") | pynini.cross("लैक", "100000") | pynini.cross("लेक", "100000")  | pynini.cross("लाक", "100000")
         graph_crore = pynini.cross("करोड़", "10000000") | pynini.cross("क्रोर", "10000000")
 
         #Handles 1-999 (direct spoken)
         graph_hundred_component = pynini.union((graph_digit | pynutil.insert("1")) + delete_space + pynutil.delete(cents) + (delete_space + del_And + delete_space | delete_space),
                                                pynutil.insert("0"))
-        graph_hundred_component += pynini.union(graph_tens , (graph_ties  | pynutil.insert("0")) + delete_space + (graph_digit | pynutil.insert("0")))
+        graph_hundred_component += pynini.union((graph_tens_en | graph_tens) , (graph_ties  | pynutil.insert("0")) + delete_space + (graph_digit | pynutil.insert("0")))
         # handling double digit hundreds like उन्निस सौ + digit/thousand/lakh/crore etc
         #graph_hundred_component_prefix_tens = pynini.union(graph_tens + delete_space + pynutil.delete(cents) + delete_space,)
         #                                                   # pynutil.insert("55"))
         graph_hundred_component_prefix_tens = pynini.union((graph_tens_en | graph_tens) + delete_space + pynutil.delete(cents) + (delete_space + del_And + delete_space | delete_space),
                                                             )
 
-        graph_hundred_component_prefix_tens += pynini.union(graph_tens,
+        graph_hundred_component_prefix_tens += pynini.union((graph_tens_en | graph_tens),
                                                             (graph_ties | pynutil.insert("0")) + delete_space + (graph_digit | pynutil.insert("0")))
 
         # Although above two components have the capability to handle 1-99 also, but since we are combining both of them
@@ -107,7 +107,7 @@ class CardinalFst(GraphFst):
         # )
 
         #Handles 10-99 in both hi, en
-        graph_hundred_component_non_hundred = pynini.union(graph_tens,
+        graph_hundred_component_non_hundred = pynini.union((graph_tens_en | graph_tens),
                                                             (graph_ties | pynutil.insert("0")) + delete_space + (graph_digit | pynutil.insert("0")))
 
         #This thing now handles only 100-999 cases (in regular spoken form) and 1000-9999 (in hundred spoken form)
