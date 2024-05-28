@@ -96,7 +96,6 @@ def remove_starting_zeros(word, hindi_digits_with_zero):
         word = currency + ' ' + word
     return word
 
-
 def indian_format(word, hindi_digits_with_zero):
     if word[0] in hindi_digits_with_zero:
         s, *d = str(word).partition(".")

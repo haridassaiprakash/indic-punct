@@ -64,8 +64,31 @@ def parse_args():
     return parser.parse_args()
 
 
+# def remove_starting_zeros(word, hindi_digits_with_zero):
+#     currency_handled = ['$', '₹', '£', '€']
+#     currency = ''
+#     if word[0] in currency_handled:
+#         currency = word[0]
+#         word = word[1:]
+
+#     if all(v == '0' for v in word): # all the digits in num are zero eg: "00000000"
+#         word = ''
+
+#     elif word[0] in hindi_digits_with_zero and len(word) > 1:
+#         if all([digit == "0" for digit in list(word)]):
+#             return "1" + word
+#         if '.' in word:
+#             if len(word.split('.')[0]) == 1:
+#                 return word
+#         pos_non_zero_nums = [pos for pos, word in enumerate(list(word)) if word != "0"]
+#         # # print(pos_non_zero_nums, word)
+#         first_non_zero_num = min(pos_non_zero_nums)
+#         word = word[first_non_zero_num:]
+#     if currency:
+#         word = currency + ' ' + word
+#     return word
 def remove_starting_zeros(word, hindi_digits_with_zero):
-    currency_handled = ['$', '₹', '£', '€']
+    currency_handled =  ['$', '₹', '£', '€']
     currency = ''
     if not word:
         return word 
@@ -93,7 +116,6 @@ def remove_starting_zeros(word, hindi_digits_with_zero):
     if currency:
         word = currency + ' ' + word
     return word
-
 
 def indian_format(word, hindi_digits_with_zero):
     if word[0] in hindi_digits_with_zero:
