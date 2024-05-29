@@ -80,14 +80,14 @@ class CardinalFst(GraphFst):
         graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
         graph_tens_en = pynini.string_file(get_abs_path(data_path + "numbers/tens-en.tsv"))
 
-        cents = pynini.accep("ଶହେ") | pynini.accep("ଶହ")  | pynini.accep("ହଣ୍ଡ୍ରେଡ")  | pynini.accep("ହଣ୍ଡ୍ରେଡ୍")
+        cents = pynini.accep("ଶହେ") | pynini.accep("ଶହ")  | pynini.accep("ହଣ୍ଡ୍ରେଡ")  | pynini.accep("ହଣ୍ଡ୍ରେଡ୍")  | pynini.accep("ହଣ୍ଟ୍ରେଡ୍")
         thousands = pynini.accep("ହଜାର") | pynini.accep("ଥାଉଜେଣ୍ଡ")
         lakhs = pynini.accep("ଲକ୍ଷ") | pynini.accep("ଲକ୍ଷେ") | pynini.accep("ଲାଖ୍‌") | pynini.accep("ଲ୍ୟାକ୍") | pynini.accep("ଲ୍ୟାକ୍ସ") | pynini.accep("ଲାଖ")
         crores = pynini.accep("କୋଟି") | pynini.accep("କ୍ରୋର")
 
         del_And = pynutil.delete(pynini.closure(pynini.accep("ଆଣ୍ଡ"), 1 ,1 ))
 
-        graph_hundred = pynini.cross("ଶହେ", "100") | pynini.cross("ଶହ", "100") | pynini.cross("ହଣ୍ଡ୍ରେଡ", "100") | pynini.cross("ହଣ୍ଡ୍ରେଡ୍", "100")
+        graph_hundred = pynini.cross("ଶହେ", "100") | pynini.cross("ଶହ", "100") | pynini.cross("ହଣ୍ଡ୍ରେଡ", "100") | pynini.cross("ହଣ୍ଡ୍ରେଡ୍", "100") | pynini.cross("ହଣ୍ଟ୍ରେଡ୍", "100")
         graph_thousand  = pynini.cross("ହଜାର", "1000") | pynini.cross("ଥାଉଜେଣ୍ଡ", "1000")
         graph_lakh = pynini.cross("ଲକ୍ଷ", "100000") | pynini.cross("ଲକ୍ଷେ", "100000") | pynini.cross("ଲାଖ୍‌", "100000") | pynini.cross("ଲ୍ୟାକ୍", "100000") | pynini.cross("ଲ୍ୟାକ୍ସ", "100000") | pynini.cross("ଲାଖ", "100000")
         graph_crore = pynini.cross("କୋଟି", "10000000") | pynini.cross("କ୍ରୋର", "10000000")

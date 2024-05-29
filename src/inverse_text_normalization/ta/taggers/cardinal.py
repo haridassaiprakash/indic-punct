@@ -86,12 +86,12 @@ class CardinalFst(GraphFst):
 
         cents = pynini.accep("ஹண்ட்ரட்‌") | pynini.accep("ஹண்ட்ரெட்‌") | pynini.accep("ஹன்ட்ரட்‌") | pynini.accep("ஹன்ட்ரெட்‌") | pynini.accep("ஹண்ட்ரட்") | pynini.accep("ற்று") | pynini.accep('த்தி') | pynini.accep('நூற்று') | pynini.accep('நூறு') | pynini.accep('ஒன்று நூறு')
         thousands = pynini.accep("தவுசண்ட்‌") | pynini.accep("தௌசண்ட்‌") | pynini.accep("தௌசண்ட்‌") | pynini.accep("தௌசண்ட்") | pynini.accep('யிரத்து') | pynini.accep('யிரத்தி') | pynini.accep('யிரம்') | pynini.accep('ஆயிரம்') | pynini.accep('ஆயிரத்து') | pynini.accep('வாயிரம்')
-        lakhs = pynini.accep("லேக்‌") | pynini.accep("லாக்‌") | pynini.accep("லேக்") | pynini.accep("லேக்ஸ்") | pynini.accep('லட்சம்') | pynini.accep('லட்சத்து') | pynini.accep('ஒரு லட்சம்') | pynini.accep('இலட்சம்')
+        lakhs = pynini.accep("லேக்‌") | pynini.accep("லாக்") | pynini.accep("லேக்") | pynini.accep("லேக்ஸ்") | pynini.accep('லட்சம்') | pynini.accep('லட்சத்து') | pynini.accep('ஒரு லட்சம்') | pynini.accep('இலட்சம்')
         crores = pynini.accep("க்ரோர்‌") | pynini.accep('கோடி') | pynini.accep('கோடியே') | pynini.accep('ஒரு கோடி')
 
         graph_hundred = pynini.cross("ஹண்ட்ரட்‌", "100") | pynini.cross("ஹண்ட்ரெட்‌", "100") | pynini.cross("ஹன்ட்ரட்‌", "100") | pynini.cross("ஹன்ட்ரெட்‌", "100") | pynini.cross("ஹண்ட்ரட்", "100") | pynini.cross("ற்று", "100") | pynini.cross("த்தி", "100") | pynini.cross("நூற்று", "100") | pynini.cross("நூறு", "100") | pynini.cross("ஒன்று நூறு", "100")
         graph_thousand  = pynini.cross("தவுசண்ட்‌", "1000") | pynini.cross("தௌசண்ட்‌", "1000") | pynini.cross("தௌஸண்ட்", "1000") | pynini.cross("தௌசண்ட்", "1000") |  pynini.cross("ஆயிரம்" , "1000") | pynini.cross("யிரம்" , "1000") | pynini.cross("யிரத்தி" , "1000") | pynini.cross("யிரத்து" , "1000") | pynini.cross("ஆயிரத்து" , "1000") | pynini.cross("வாயிரம்" , "1000")
-        graph_lakh = pynini.cross("லேக்‌", "100000") | pynini.cross("லாக்‌", "100000") | pynini.cross("லேக்", "100000") | pynini.cross("லேக்ஸ்", "100000") | pynini.cross("ஒரு லட்சம்", "100000") | pynini.cross("லட்சம்", "100000") | pynini.cross("லட்சத்து", "100000") | pynini.cross("இலட்சம்", "100000")
+        graph_lakh = pynini.cross("லேக்‌", "100000") | pynini.cross("லாக்", "100000") | pynini.cross("லேக்", "100000") | pynini.cross("லேக்ஸ்", "100000") | pynini.cross("ஒரு லட்சம்", "100000") | pynini.cross("லட்சம்", "100000") | pynini.cross("லட்சத்து", "100000") | pynini.cross("இலட்சம்", "100000")
         graph_crore = pynini.cross("க்ரோர்‌", "10000000") |  pynini.cross("ஒரு கோடி", "10000000") | pynini.cross("கோடி", "10000000") | pynini.cross("கோடியே", "10000000")
         and_ = pynini.accep("அண்ட்") | pynini.accep("மற்றும்")
 
