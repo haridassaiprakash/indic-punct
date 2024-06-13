@@ -98,6 +98,8 @@ class CardinalFst(GraphFst):
         delete_lakhs= pynutil.delete(lakhs)
         delete_crores= pynutil.delete(crores)
 
+        # In kannada hundreds are said as a combined word ಮೂನ್ನೂರು "Munnooru" instead of ಮೂರು ನೂರು "mooru nooru"
+        # to handle that cases kannada_hundreds_component is created
         kannada_hundreds_component = ( kannada_hundreds + ( (delete_space + graph_tens) |
                                                            (pynutil.insert("0") + delete_space + graph_digit) |
                                                             pynutil.insert("00") ) )

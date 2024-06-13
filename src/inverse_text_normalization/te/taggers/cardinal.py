@@ -93,9 +93,8 @@ class CardinalFst(GraphFst):
         delete_space = pynini.closure(pynutil.delete(" "), 0, 1)
 
         del_And = pynutil.delete(pynini.closure(pynini.accep("అండ్"), 1 ,1 ))
-
-        # To handles the cases from 200 to 999
-        # Also handling double digit hundreds like tweleve hundred + digit/thousand/lakh/crore etc (12,456)
+        
+        #hundreds graph
         hundreds= ( (graph_digit | graph_tens | graph_tens_en) + delete_space + delete_hundreds + ( ((delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en)) |
                                                                                                      (pynutil.insert("0") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
                                                                                                       pynutil.insert("00") ) )
@@ -125,7 +124,7 @@ class CardinalFst(GraphFst):
 
         graph_thousands = thousands_prefix_tens | thousands_prefix_digits | thousand
 
-        # lakhs graph
+        # Similarly lakhs graph
         lakhs =  (graph_digit | graph_tens | graph_tens_en | pynutil.insert("1")) + delete_space + delete_lakhs + ( (delete_space + thousands_prefix_tens) |
                                                                                               (pynutil.insert("0")+ delete_space + thousands_prefix_digits) |
                                                                                                (pynutil.insert("00")+ delete_space + graph_hundred_component_at_least_one_none_zero_digit) |
@@ -134,7 +133,7 @@ class CardinalFst(GraphFst):
                                                                                                 pynutil.insert("00000", weight= -0.1) ) 
         graph_lakhs = lakh | lakhs
 
-        # crores graph
+        # similarly crores graph
         crores = ( (graph_digit | graph_tens | graph_tens_en) + delete_space + delete_crores + ( (delete_space + graph_lakhs) |
                                                                                 (pynutil.insert("00")+  delete_space + graph_thousands) |
                                                                                 (pynutil.insert("0000")+ delete_space + graph_hundred_component_at_least_one_none_zero_digit) |
