@@ -76,14 +76,14 @@ class CardinalFst(GraphFst):
         graph_tens_en = pynini.string_file(get_abs_path(data_path + "numbers/tens_en.tsv"))
         graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
 
-        cents = pynini.accep("સો") | pynini.accep("સ્સો") | pynini.accep("હન્ડ્રેડ")  | pynini.accep("હુંદ્રેડ")
-        thousands = pynini.accep("થાઉઝન્ડ") | pynini.accep("હજાર") | pynini.accep("થૌસંદ")
+        cents = pynini.accep("સો") | pynini.accep("સ્સો") | pynini.accep("હન્ડ્રેડ")  | pynini.accep("હુંદ્રેડ")  | pynini.accep("હંડ્રેડ")  | pynini.accep("હુંડ્રેડ")  | pynini.accep("સૌ")
+        thousands = pynini.accep("થાઉઝન્ડ") | pynini.accep("હજાર") | pynini.accep("થૌસંદ") | pynini.accep("થૌઝન્ડ") | pynini.accep("થાૌઝન્ડ") | pynini.accep("થૌસન્ડ")
         lakhs = pynini.accep("લાખ")
         crores = pynini.accep("કરોડ઼") | pynini.accep("કરોડ")
         and_ = pynini.accep("એન્ડ") | pynini.accep("ને")
         
-        graph_hundred = pynini.cross("સો", "100") | pynini.cross("સ્સો", "100") | pynini.cross("હન્ડ્રેડ", "100") | pynini.cross("હુંદ્રેડ", "100")
-        graph_thousand  = pynini.cross("થાઉઝન્ડ", "1000") | pynini.cross("હજાર", "1000") | pynini.cross("થૌસંદ", "1000")
+        graph_hundred = pynini.cross("સો", "100") | pynini.cross("સ્સો", "100") | pynini.cross("હન્ડ્રેડ", "100") | pynini.cross("હુંદ્રેડ", "100") | pynini.cross("હંડ્રેડ", "100") | pynini.cross("હુંડ્રેડ", "100") | pynini.cross("સૌ", "100")
+        graph_thousand  = pynini.cross("થાઉઝન્ડ", "1000") | pynini.cross("હજાર", "1000") | pynini.cross("થૌસંદ", "1000")  | pynini.cross("થૌઝન્ડ", "1000")  | pynini.cross("થાૌઝન્ડ", "1000")  | pynini.cross("થૌસન્ડ", "1000")
         graph_lakh = pynini.cross("લાખ", "100000") 
         graph_crore = pynini.cross("કરોડ઼", "10000000") | pynini.cross("કરોડ", "10000000")
 

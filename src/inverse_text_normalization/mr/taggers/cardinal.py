@@ -77,15 +77,15 @@ class CardinalFst(GraphFst):
         graph_tens_en = pynini.string_file(get_abs_path(data_path + "numbers/tens-en.tsv"))
 
         cents = pynini.accep("शंभर") |  pynini.accep("शे") | pynini.accep("हंड्रेड") | pynini.accep("हन्ड्रड")
-        thousands = pynini.accep("थाउज़न्ड") | pynini.accep("हज़ार") | pynini.accep("थाउज़ेंड") | pynini.accep("हजार") | pynini.accep("थाउजेंड") | pynini.accep("थाउजंड")
-        lakhs = pynini.accep("लाख") | pynini.accep("लैक") | pynini.accep("लेक") | pynini.accep("लक्ष")
+        thousands = pynini.accep("थाउज़न्ड") | pynini.accep("हज़ार") | pynini.accep("थाउज़ेंड") | pynini.accep("हजार") | pynini.accep("थाउजेंड") | pynini.accep("थाउजंड") | pynini.accep("थाउसंड")
+        lakhs = pynini.accep("लाख") | pynini.accep("लैक") | pynini.accep("लेक") | pynini.accep("लक्ष") | pynini.accep("लॅक्स") | pynini.accep("लॅख") | pynini.accep("लॅखस")
         crores = pynini.accep("कोटी") | pynini.accep("क्रोर")
 
         del_And = pynutil.delete(pynini.closure(pynini.accep("एंड"), 1 ,1 ))
         
         graph_hundred = pynini.cross("शंभर", "100") | pynini.cross("शे", "100") | pynini.cross("हंड्रेड", "100") | pynini.cross("हन्ड्रड", "100")
-        graph_thousand  = pynini.cross("हज़ार", "1000") | pynini.cross("थाउज़न्ड", "1000") | pynini.cross("थाउज़ेंड", "1000") | pynini.cross("थाउजेंड", "1000") | pynini.cross("हजार", "1000") | pynini.cross("थाउजंड", "1000")
-        graph_lakh = pynini.cross("लाख", "100000") | pynini.cross("लैक", "100000") | pynini.cross("लेक", "100000") | pynini.cross("लक्ष", "100000")
+        graph_thousand  = pynini.cross("हज़ार", "1000") | pynini.cross("थाउज़न्ड", "1000") | pynini.cross("थाउज़ेंड", "1000") | pynini.cross("थाउजेंड", "1000") | pynini.cross("हजार", "1000") | pynini.cross("थाउजंड", "1000") | pynini.accep("थाउसंड")
+        graph_lakh = pynini.cross("लाख", "100000") | pynini.cross("लैक", "100000") | pynini.cross("लेक", "100000") | pynini.cross("लक्ष", "100000") | pynini.cross("लैक", "100000") | pynini.cross("लॅख", "100000") | pynini.cross("लॅखस", "100000")
         graph_crore = pynini.cross("कोटी", "10000000") | pynini.cross("क्रोर", "10000000")
 
         #Handles 1-999 (direct spoken)
@@ -99,6 +99,9 @@ class CardinalFst(GraphFst):
         graph_hundred_component_prefix_tens = pynini.union((graph_tens_en | graph_tens) + delete_space + pynutil.delete(cents) + (delete_space + del_And + delete_space | delete_space),
                                                             )
         
+        
+        # to support tens_en the graph is changed accordingly
+
         # to support tens_en the graph is changed accordingly
         graph_hundred_component_prefix_tens += pynini.union((graph_tens_en | graph_tens),
                                                             (graph_ties | pynutil.insert("0")) + delete_space + (graph_digit | pynutil.insert("0")))

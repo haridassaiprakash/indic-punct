@@ -80,47 +80,29 @@ class CardinalFst(GraphFst):
         graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
         graph_tens_en = pynini.string_file(get_abs_path(data_path + "numbers/tens-en.tsv"))
 
-        # with open(get_abs_path(data_path + "numbers/hundred.tsv"), encoding='utf-8') as f:
-        #     hundreds = f.readlines()
-
-        # hundred = hundreds[0].strip()
-        # hundred_alt = hundreds[1].strip()
-
-        # with open(get_abs_path(data_path + "numbers/thousands.tsv")) as f:
-        #     thousands = f.readlines()
-        # thousand = thousands[0].strip()
-
-        # with open(get_abs_path(data_path + "numbers/lakh.tsv")) as f:
-        #     lakhs = f.readlines()
-        # lakh = lakhs[0].strip()
-
-        # with open(get_abs_path(data_path + "numbers/crore.tsv")) as f:
-        #     crores = f.readlines()
-        # crore = crores[0].strip()
-
-        cents = pynini.accep("ଶହେ") | pynini.accep("ଶହ")
+        cents = pynini.accep("ଶହେ") | pynini.accep("ଶହ")  | pynini.accep("ହଣ୍ଡ୍ରେଡ")  | pynini.accep("ହଣ୍ଡ୍ରେଡ୍")  | pynini.accep("ହଣ୍ଟ୍ରେଡ୍")
         thousands = pynini.accep("ହଜାର") | pynini.accep("ଥାଉଜେଣ୍ଡ")
-        lakhs = pynini.accep("ଲକ୍ଷ") | pynini.accep("ଲକ୍ଷେ") | pynini.accep("ଲାଖ୍‌")
+        lakhs = pynini.accep("ଲକ୍ଷ") | pynini.accep("ଲକ୍ଷେ") | pynini.accep("ଲାଖ୍‌") | pynini.accep("ଲ୍ୟାକ୍") | pynini.accep("ଲ୍ୟାକ୍ସ") | pynini.accep("ଲାଖ")
         crores = pynini.accep("କୋଟି") | pynini.accep("କ୍ରୋର")
 
         del_And = pynutil.delete(pynini.closure(pynini.accep("ଆଣ୍ଡ"), 1 ,1 ))
 
-        graph_hundred = pynini.cross("ଶହେ", "100") | pynini.cross("ଶହ", "100")
+        graph_hundred = pynini.cross("ଶହେ", "100") | pynini.cross("ଶହ", "100") | pynini.cross("ହଣ୍ଡ୍ରେଡ", "100") | pynini.cross("ହଣ୍ଡ୍ରେଡ୍", "100") | pynini.cross("ହଣ୍ଟ୍ରେଡ୍", "100")
         graph_thousand  = pynini.cross("ହଜାର", "1000") | pynini.cross("ଥାଉଜେଣ୍ଡ", "1000")
-        graph_lakh = pynini.cross("ଲକ୍ଷ", "100000") | pynini.cross("ଲକ୍ଷେ", "100000") | pynini.cross("ଲାଖ୍‌", "100000")
+        graph_lakh = pynini.cross("ଲକ୍ଷ", "100000") | pynini.cross("ଲକ୍ଷେ", "100000") | pynini.cross("ଲାଖ୍‌", "100000") | pynini.cross("ଲ୍ୟାକ୍", "100000") | pynini.cross("ଲ୍ୟାକ୍ସ", "100000") | pynini.cross("ଲାଖ", "100000")
         graph_crore = pynini.cross("କୋଟି", "10000000") | pynini.cross("କ୍ରୋର", "10000000")
 
         #Handles 1-999 (direct spoken)
         graph_hundred_component = pynini.union((graph_digit | pynutil.insert("1")) + delete_space + pynutil.delete(cents) + (delete_space + del_And + delete_space | delete_space),
                                                pynutil.insert("0"))
-        graph_hundred_component += pynini.union(graph_tens , (graph_ties  | pynutil.insert("0")) + delete_space + (graph_digit | pynutil.insert("0")))
+        graph_hundred_component += pynini.union((graph_tens_en | graph_tens) , (graph_ties  | pynutil.insert("0")) + delete_space + (graph_digit | pynutil.insert("0")))
         # handling double digit hundreds like उन्निस सौ + digit/thousand/lakh/crore etc
         #graph_hundred_component_prefix_tens = pynini.union(graph_tens + delete_space + pynutil.delete(cents) + delete_space,)
         #                                                   # pynutil.insert("55"))
         graph_hundred_component_prefix_tens = pynini.union((graph_tens_en | graph_tens) + delete_space + pynutil.delete(cents) + (delete_space + del_And + delete_space | delete_space),
                                                             )
 
-        graph_hundred_component_prefix_tens += pynini.union(graph_tens,
+        graph_hundred_component_prefix_tens += pynini.union((graph_tens_en | graph_tens),
                                                             (graph_ties | pynutil.insert("0")) + delete_space + (graph_digit | pynutil.insert("0")))
 
         # Although above two components have the capability to handle 1-99 also, but since we are combining both of them
@@ -131,7 +113,7 @@ class CardinalFst(GraphFst):
         # )
 
         #Handles 10-99 in both hi, en
-        graph_hundred_component_non_hundred = pynini.union(graph_tens,
+        graph_hundred_component_non_hundred = pynini.union((graph_tens_en | graph_tens),
                                                             (graph_ties | pynutil.insert("0")) + delete_space + (graph_digit | pynutil.insert("0")))
 
         #This thing now handles only 100-999 cases (in regular spoken form) and 1000-9999 (in hundred spoken form)
@@ -180,7 +162,7 @@ class CardinalFst(GraphFst):
         fst_crore = fst+graph_crore # handles words like चार हज़ार करोड़
         fst_lakh = fst+graph_lakh # handles words like चार हज़ार लाख
         # fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred, graph_zero, graph_multiples, graph_char_multiples, graph_chars)
-        fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred, graph_zero, graph_multiples,graph_chars, graph_tens_en)
+        fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred, graph_zero, graph_multiples,graph_chars, graph_tens_en,graph_char_multiples)
 
         # labels_exception = [num_to_word(x) for x in range(1, 3)]
         # graph_exception = pynini.union(*labels_exception)
