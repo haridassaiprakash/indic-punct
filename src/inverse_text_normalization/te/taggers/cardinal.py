@@ -73,8 +73,8 @@ class CardinalFst(GraphFst):
         graph_ties = pynini.string_file(get_abs_path(data_path + "numbers/ties.tsv"))
         graph_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples.tsv"))
         graph_digit = pynini.string_file(get_abs_path(data_path + "numbers/digit.tsv"))
-        graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
-        graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
+        # graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
+        # graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
 
         cents = pynini.accep("వంద") | pynini.accep("వందలు") | pynini.accep("వందల") | pynini.accep("నూట") | pynini.accep("హండ్రెడ్") | pynini.accep("ఒక వంద")
         veya = pynini.accep("వెయ్యి") | pynini.accep("వేలు") | pynini.accep("వేల") | pynini.accep("వెయ్య") | pynini.accep("థౌసండ్")
@@ -159,9 +159,9 @@ class CardinalFst(GraphFst):
                     graph_thousands |
                     graph_lakhs |
                     graph_crores |
-                    graph_chars |
-                    graph_multiples|
-                    graph_char_multiples )
+                    # graph_chars |
+                    graph_multiples )
+                    # graph_char_multiples )
 
 
         self.graph_no_exception = fst

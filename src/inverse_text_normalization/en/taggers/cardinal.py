@@ -69,8 +69,8 @@ class CardinalFst(GraphFst):
         graph_digit = pynini.string_file(get_abs_path(data_path + "numbers/digit.tsv"))
         graph_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples.tsv"))
         graph_ties = pynini.string_file(get_abs_path(data_path + "numbers/ties.tsv"))
-        graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
-        graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
+        # graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
+        # graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
         #graph_tens_en = pynini.string_file(get_abs_path(data_path + "numbers/tens-en.tsv"))
         # graph_teen = pynini.string_file(get_abs_path(data_path + "numbers/teen.tsv"))
         delete_space = pynini.closure(pynutil.delete(" "), 0, 1)
@@ -235,9 +235,10 @@ class CardinalFst(GraphFst):
                     graph_crores |
                     graph_millions |
                     graph_billions |
-                    graph_chars |
-                    graph_multiples|
-                    graph_char_multiples )
+                    # graph_chars |
+                    graph_multiples
+                    # graph_char_multiples 
+                    )
 
         # labels_exception = [num_to_word(x) for x in range(1, 3)]
         # graph_exception = pynini.union(*labels_exception)

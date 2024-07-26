@@ -70,10 +70,10 @@ class CardinalFst(GraphFst):
         graph_zero = pynini.string_file(get_abs_path(data_path + "numbers/zero.tsv"))
         graph_tens = pynini.string_file(get_abs_path(data_path + "numbers/tens.tsv"))
         graph_digit = pynini.string_file(get_abs_path(data_path + "numbers/digit.tsv"))
-        graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
+        # graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
         graph_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples.tsv"))
         graph_tens_en = pynini.string_file(get_abs_path(data_path + "numbers/tens_en.tsv"))
-        graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
+        # graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
 
         cents = pynini.accep("শো") |  pynini.accep("শ") | pynini.accep("শত") | pynini.accep("হানড্রেড") | pynini.accep("হন্ডরেড") | pynini.accep("হানড্রড") | pynini.accep("হান্ড্রেড")
         thousands = pynini.accep("হাজার") | pynini.accep("থাউসেন্ড") | pynini.accep("থৌসান্ড") | pynini.accep("থৌস্যান্ড") | pynini.accep("থাউসান্ড") | pynini.accep("থাউজেন্ড")
@@ -153,7 +153,7 @@ class CardinalFst(GraphFst):
 
         fst_crore = fst+graph_crore # handles words like चार हज़ार करोड़
         fst_lakh = fst+graph_lakh # handles words like चार हज़ार लाख
-        fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred,graph_zero,graph_chars,graph_multiples,graph_tens_en, graph_char_multiples)
+        fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred,graph_zero,graph_multiples,graph_tens_en)
 
 
         self.graph_no_exception = fst
