@@ -74,11 +74,11 @@ class CardinalFst(GraphFst):
         graph_zero = pynini.string_file(get_abs_path(data_path + "numbers/zero.tsv"))
         graph_tens = pynini.string_file(get_abs_path(data_path + "numbers/tens.tsv"))
         graph_digit = pynini.string_file(get_abs_path(data_path + "numbers/digit.tsv"))
-        # graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
+        graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
         graph_mutiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples.tsv"))
         kannada_hundreds = pynini.string_file(get_abs_path(data_path + "numbers/kn_hundreds.tsv"))
         graph_tens_en = pynini.string_file(get_abs_path(data_path + "numbers/tens_en.tsv"))
-        # graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
+        graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
 
         cents = pynini.accep("ನೂರು") |  pynini.accep("ನೂರ") | pynini.accep("ನ್ನೂರು") | pynini.accep("ಹಂಡ್ರೆಡ್")
         thousands = pynini.accep("ಸಾವಿರ") | pynini.accep("ಸಾವಿರದ") | pynini.accep("ಥೌಸಂಡ್") | pynini.accep("ಥೌಸೆಂಡ್") | pynini.accep("ತೌಸಂಡ್")
@@ -161,9 +161,7 @@ class CardinalFst(GraphFst):
                     graph_thousands |
                     graph_lakhs |
                     graph_crores |
-                    # graph_chars |
                     graph_mutiples )
-                    # graph_char_multiples )
 
         fst_crore = fst + graph_crore  # handles words like चार हज़ार करोड़
         fst_lakh = fst + graph_lakh  # handles words like चार हज़ार लाख

@@ -70,8 +70,8 @@ class CardinalFst(GraphFst):
         graph_digit = pynini.string_file(get_abs_path(data_path + "numbers/digit.tsv"))
         graph_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples.tsv"))
         graph_ties = pynini.string_file(get_abs_path(data_path + "numbers/ties.tsv"))
-        # graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
-        # graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
+        graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
+        graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
         graph_tens_en = pynini.string_file(get_abs_path(data_path + "numbers/tens-en.tsv"))
 
         cents = pynini.accep("हंड्रेड") | pynini.accep("हन्ड्रेड") | pynini.accep("हन्ड्रड") | pynini.accep("नॉट") | pynini.accep("नोट") | pynini.accep("सौ")

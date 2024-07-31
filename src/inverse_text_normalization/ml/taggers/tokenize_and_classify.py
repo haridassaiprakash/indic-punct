@@ -55,7 +55,7 @@ class ClassifyFst(GraphFst):
 
         # measure = MeasureFst(cardinal_graph_fst, decimal_graph_fst).fst
         # date = DateFst(ordinal_graph_fst).fst
-        # word = WordFst().fst
+        word = WordFst().fst
         # time = TimeFst().fst
         money = MoneyFst(cardinal_graph_fst, decimal_graph_fst).fst
         # whitelist = WhiteListFst().fst
@@ -69,7 +69,7 @@ class ClassifyFst(GraphFst):
             | pynutil.add_weight(cardinal, 1.1)
             | pynutil.add_weight(ordinal, 1.1)
             | pynutil.add_weight(money, 1.1)
-            # | pynutil.add_weight(word, 100)
+            | pynutil.add_weight(word, 100)
         )
 
         self.fst = graph.optimize()

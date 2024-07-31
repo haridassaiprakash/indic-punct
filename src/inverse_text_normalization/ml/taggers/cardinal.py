@@ -160,9 +160,7 @@ class CardinalFst(GraphFst):
                     graph_thousands |
                     graph_lakhs |
                     graph_crores |
-                    # graph_chars |
                     graph_multiples)
-                    # graph_char_multiples
 
         fst_crore = fst + graph_crore  # handles words like चार हज़ार करोड़
         fst_lakh = fst + graph_lakh  # handles words like चार हज़ार लाख

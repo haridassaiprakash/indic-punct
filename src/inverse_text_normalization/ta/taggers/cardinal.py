@@ -82,8 +82,8 @@ class CardinalFst(GraphFst):
         graph_digit = pynini.string_file(get_abs_path(data_path + "numbers/digit.tsv"))
         graph_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples.tsv"))
         graph_ties = pynini.string_file(get_abs_path(data_path + "numbers/ties.tsv"))
-        # graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
-        # graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
+        graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
+        graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
         graph_tens_en = pynini.string_file(get_abs_path(data_path + "numbers/tens-en.tsv"))
 
         cents = pynini.accep("ஹண்ட்ரட்‌") | pynini.accep("ஹண்ட்ரெட்‌") | pynini.accep("ஹன்ட்ரட்‌") | pynini.accep("ஹன்ட்ரெட்‌") | pynini.accep("ஹண்ட்ரட்") | pynini.accep("ற்று") | pynini.accep('த்தி') | pynini.accep('நூற்று') | pynini.accep('நூறு') | pynini.accep('ஒன்று நூறு') | pynini.accep('நூத்தி') | pynini.accep('நூற்றுப்') | pynini.accep('நூற்றை')
@@ -174,9 +174,7 @@ class CardinalFst(GraphFst):
                     graph_thousands |
                     graph_lakhs |
                     graph_crores |
-                    # graph_chars |
                     graph_multiples|
-                    # graph_char_multiples |
                     tamil_graph_exception_list )
         
         self.graph_no_exception = fst
