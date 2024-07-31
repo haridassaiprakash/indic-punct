@@ -15,13 +15,13 @@
 
 from inverse_text_normalization.brx.graph_utils import GraphFst
 from inverse_text_normalization.brx.verbalizers.cardinal import CardinalFst
-from inverse_text_normalization.brx.verbalizers.date import DateFst
+# from inverse_text_normalization.brx.verbalizers.date import DateFst
 from inverse_text_normalization.brx.verbalizers.decimal import DecimalFst
-from inverse_text_normalization.brx.verbalizers.measure import MeasureFst
+# from inverse_text_normalization.brx.verbalizers.measure import MeasureFst
 from inverse_text_normalization.brx.verbalizers.money import MoneyFst
 from inverse_text_normalization.brx.verbalizers.ordinal import OrdinalFst
-from inverse_text_normalization.brx.verbalizers.time import TimeFst
-from inverse_text_normalization.brx.verbalizers.whitelist import WhiteListFst
+# from inverse_text_normalization.brx.verbalizers.time import TimeFst
+# from inverse_text_normalization.brx.verbalizers.whitelist import WhiteListFst
 
 
 class VerbalizeFst(GraphFst):
@@ -34,11 +34,11 @@ class VerbalizeFst(GraphFst):
         cardinal = CardinalFst().fst
         ordinal = OrdinalFst().fst
         decimal = DecimalFst().fst
-        measure = MeasureFst().fst
-        time = TimeFst().fst
-        date = DateFst().fst
+        # measure = MeasureFst().fst
+        # time = TimeFst().fst
+        # date = DateFst().fst
         money = MoneyFst().fst
-        whitelist = WhiteListFst().fst
-        # graph = time | date | measure | ordinal | decimal | cardinal | whitelist
-        graph = time | date | money | measure | ordinal | decimal | cardinal | whitelist
+        # whitelist = WhiteListFst().fst
+        graph = ordinal | decimal | cardinal | money
+        # graph = time | date | money | measure | ordinal | decimal | cardinal | whitelist
         self.fst = graph

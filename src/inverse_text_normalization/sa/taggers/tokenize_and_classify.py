@@ -53,22 +53,22 @@ class ClassifyFst(GraphFst):
         decimal_graph_fst = DecimalFst(cardinal_graph_fst)
         decimal = decimal_graph_fst.fst
 
-        measure = MeasureFst(cardinal_graph_fst, decimal_graph_fst).fst
-        date = DateFst(ordinal_graph_fst).fst
+        # measure = MeasureFst(cardinal_graph_fst, decimal_graph_fst).fst
+        # date = DateFst(ordinal_graph_fst).fst
         word = WordFst().fst
-        time = TimeFst().fst
-        money = MoneyFst(cardinal_graph_fst, decimal_graph_fst).fst
-        whitelist = WhiteListFst().fst
+        # time = TimeFst().fst
+        # money = MoneyFst(cardinal_graph_fst, decimal_graph_fst).fst
+        # whitelist = WhiteListFst().fst
 
         graph = (
-            pynutil.add_weight(whitelist, 1.01)
-            | pynutil.add_weight(time, 1.1)
-            | pynutil.add_weight(date, 1.09)
-            | pynutil.add_weight(decimal, 1.1)
-            | pynutil.add_weight(measure, 1.1)
+            # pynutil.add_weight(whitelist, 1.01)
+            # | pynutil.add_weight(time, 1.1)
+            # | pynutil.add_weight(date, 1.09)
+            pynutil.add_weight(decimal, 1.1)
+            # | pynutil.add_weight(measure, 1.1)
             | pynutil.add_weight(cardinal, 1.1)
             | pynutil.add_weight(ordinal, 1.1)
-            | pynutil.add_weight(money, 1.1)
+            # | pynutil.add_weight(money, 1.1)
             | pynutil.add_weight(word, 100)
         )
 
