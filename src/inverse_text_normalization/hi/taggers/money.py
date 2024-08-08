@@ -65,10 +65,10 @@ class MoneyFst(GraphFst):
         cents_standalone = (
             pynutil.insert("fractional_part: \"")
             + pynini.union(
-                pynutil.add_weight(((NEMO_SIGMA - "one") @ cardinal_graph), -0.7) @ add_leading_zero_to_double_digit
+                pynutil.add_weight(((NEMO_SIGMA - "एक") @ cardinal_graph), -0.7) @ add_leading_zero_to_double_digit
                 + delete_space
-                + pynutil.delete("cents"),
-                pynini.cross("one", "01") + delete_space + pynutil.delete("cent"),
+                + pynutil.delete("पैसे"),
+                pynini.cross("एक", "01") + delete_space + pynutil.delete("पैसा"),
             )
             + pynutil.insert("\"")
         )
@@ -93,7 +93,7 @@ class MoneyFst(GraphFst):
 
         graph_integer = (
             pynutil.insert("integer_part: \"")
-            + ((NEMO_SIGMA - "one") @ cardinal_graph)
+            + ((NEMO_SIGMA - "एक") @ cardinal_graph)
             + pynutil.insert("\"")
             + delete_extra_space
             + (graph_unit_plural | graph_unit_singular)
@@ -101,7 +101,7 @@ class MoneyFst(GraphFst):
         )
         graph_integer |= (
             pynutil.insert("integer_part: \"")
-            + pynini.cross("one", "1")
+            + pynini.cross("एक", "1")
             + pynutil.insert("\"")
             + delete_extra_space
             + graph_unit_singular
