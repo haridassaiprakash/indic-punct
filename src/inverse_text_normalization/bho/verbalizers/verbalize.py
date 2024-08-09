@@ -19,7 +19,7 @@ from inverse_text_normalization.bho.verbalizers.cardinal import CardinalFst
 from inverse_text_normalization.bho.verbalizers.decimal import DecimalFst
 # from inverse_text_normalization.bho.verbalizers.measure import MeasureFst
 from inverse_text_normalization.bho.verbalizers.money import MoneyFst
-from inverse_text_normalization.bho.verbalizers.ordinal import OrdinalFst
+# from inverse_text_normalization.bho.verbalizers.ordinal import OrdinalFst
 # from inverse_text_normalization.bho.verbalizers.time import TimeFst
 # from inverse_text_normalization.bho.verbalizers.whitelist import WhiteListFst
 
@@ -32,13 +32,13 @@ class VerbalizeFst(GraphFst):
     def __init__(self):
         super().__init__(name="verbalize", kind="verbalize")
         cardinal = CardinalFst().fst
-        ordinal = OrdinalFst().fst
+        # ordinal = OrdinalFst().fst
         decimal = DecimalFst().fst
         # measure = MeasureFst().fst
         # time = TimeFst().fst
         # date = DateFst().fst
         money = MoneyFst().fst
         # whitelist = WhiteListFst().fst
-        graph = ordinal | decimal | cardinal | money
+        graph =  decimal | cardinal | money
         # graph = time | date | money | measure | ordinal | decimal | cardinal | whitelist
         self.fst = graph

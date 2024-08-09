@@ -47,8 +47,8 @@ class ClassifyFst(GraphFst):
         cardinal_graph_fst = CardinalFst()
         cardinal = cardinal_graph_fst.fst
 
-        ordinal_graph_fst = OrdinalFst(cardinal_graph_fst)
-        ordinal = ordinal_graph_fst.fst
+        # ordinal_graph_fst = OrdinalFst(cardinal_graph_fst)
+        # ordinal = ordinal_graph_fst.fst
 
         decimal_graph_fst = DecimalFst(cardinal_graph_fst)
         decimal = decimal_graph_fst.fst
@@ -67,7 +67,7 @@ class ClassifyFst(GraphFst):
             pynutil.add_weight(decimal, 1.1)
             # | pynutil.add_weight(measure, 1.1)
             | pynutil.add_weight(cardinal, 1.1)
-            | pynutil.add_weight(ordinal, 1.1)
+            # | pynutil.add_weight(ordinal, 1.1)
             | pynutil.add_weight(money, 1.1)
             | pynutil.add_weight(word, 100)
         )
