@@ -227,7 +227,7 @@ class CardinalFst(GraphFst):
         fst = (  graph_zero |
                     graph_tens |
                     graph_tens_en |
-                    graph_digit |
+                    # graph_digit |
                     graph_hundred_component_at_least_one_none_zero_digit |
                     graph_thousands |
                     graph_lakhs |
