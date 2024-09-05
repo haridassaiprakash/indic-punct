@@ -76,91 +76,169 @@ class CardinalFst(GraphFst):
         graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
         graph_tens_en = pynini.string_file(get_abs_path(data_path + "numbers/tens-en.tsv"))
 
-        cents = pynini.accep("शंभर") |  pynini.accep("शे") | pynini.accep("हंड्रेड") | pynini.accep("हन्ड्रड")
-        thousands = pynini.accep("थाउज़न्ड") | pynini.accep("हज़ार") | pynini.accep("थाउज़ेंड") | pynini.accep("हजार") | pynini.accep("थाउजेंड") | pynini.accep("थाउजंड") | pynini.accep("थाउसंड")
-        lakhs = pynini.accep("लाख") | pynini.accep("लैक") | pynini.accep("लेक") | pynini.accep("लक्ष") | pynini.accep("लॅक्स") | pynini.accep("लॅख") | pynini.accep("लॅखस")
-        crores = pynini.accep("कोटी") | pynini.accep("क्रोर")
+        cents_data = pynini.accep("शंभर") |  pynini.accep("शे") | pynini.accep("हंड्रेड") | pynini.accep("हन्ड्रड")
+        thousands_data = pynini.accep("थाउज़न्ड") | pynini.accep("हज़ार") | pynini.accep("थाउज़ेंड") | pynini.accep("हजार") | pynini.accep("थाउजेंड") | pynini.accep("थाउजंड") | pynini.accep("थाउसंड")
+        lakhs_data = pynini.accep("लाख") | pynini.accep("लैक") | pynini.accep("लेक") | pynini.accep("लक्ष") | pynini.accep("लॅक्स") | pynini.accep("लॅख") | pynini.accep("लॅखस")
+        crores_data = pynini.accep("कोटी") | pynini.accep("क्रोर")
+        millions_data =  pynini.accep("मिलियन") | pynini.accep("मिलियंस") | pynini.accep("मिलियन्स")
+        billions_data =  pynini.accep("बिलियन") | pynini.accep("बिलियंस") | pynini.accep("बिलियन्स")
 
         del_And = pynutil.delete(pynini.closure(pynini.accep("एंड"), 1 ,1 ))
         
-        graph_hundred = pynini.cross("शंभर", "100") | pynini.cross("शे", "100") | pynini.cross("हंड्रेड", "100") | pynini.cross("हन्ड्रड", "100")
-        graph_thousand  = pynini.cross("हज़ार", "1000") | pynini.cross("थाउज़न्ड", "1000") | pynini.cross("थाउज़ेंड", "1000") | pynini.cross("थाउजेंड", "1000") | pynini.cross("हजार", "1000") | pynini.cross("थाउजंड", "1000") | pynini.accep("थाउसंड")
-        graph_lakh = pynini.cross("लाख", "100000") | pynini.cross("लैक", "100000") | pynini.cross("लेक", "100000") | pynini.cross("लक्ष", "100000") | pynini.cross("लैक", "100000") | pynini.cross("लॅख", "100000") | pynini.cross("लॅखस", "100000")
-        graph_crore = pynini.cross("कोटी", "10000000") | pynini.cross("क्रोर", "10000000")
+        hundred = pynini.cross("शंभर", "100") | pynini.cross("शे", "100") | pynini.cross("हंड्रेड", "100") | pynini.cross("हन्ड्रड", "100")
+        thousand  = pynini.cross("हज़ार", "1000") | pynini.cross("थाउज़न्ड", "1000") | pynini.cross("थाउज़ेंड", "1000") | pynini.cross("थाउजेंड", "1000") | pynini.cross("हजार", "1000") | pynini.cross("थाउजंड", "1000") | pynini.accep("थाउसंड")
+        lakh = pynini.cross("लाख", "100000") | pynini.cross("लैक", "100000") | pynini.cross("लेक", "100000") | pynini.cross("लक्ष", "100000") | pynini.cross("लैक", "100000") | pynini.cross("लॅख", "100000") | pynini.cross("लॅखस", "100000")
+        crore = pynini.cross("कोटी", "10000000") | pynini.cross("क्रोर", "10000000")
+        million =  pynini.cross("मिलियन", "1000000") | pynini.cross("मिलियंस", "1000000") | pynini.cross("मिलियन्स", "1000000")
+        billion =  pynini.cross("बिलियन", "1000000000") | pynini.cross("बिलियंस", "1000000000") | pynini.cross("बिलियन्स", "1000000000")
 
-        #Handles 1-999 (direct spoken)
-        graph_hundred_component = pynini.union((graph_digit | pynutil.insert("1")) + delete_space + pynutil.delete(cents) + (delete_space + del_And + delete_space | delete_space),
-                                               pynutil.insert("0"))
-        graph_hundred_component += pynini.union((graph_tens_en | graph_tens) , (graph_ties  | pynutil.insert("0")) + delete_space + (graph_digit | pynutil.insert("0")))
-        # handling double digit hundreds like उन्निस सौ + digit/thousand/lakh/crore etc
-        #graph_hundred_component_prefix_tens = pynini.union(graph_tens + delete_space + pynutil.delete(cents) + delete_space,)
-        #                                                   # pynutil.insert("55"))
-        graph_hundred_component_prefix_tens = pynini.union((graph_tens_en | graph_tens) + delete_space + pynutil.delete(cents) + (delete_space + del_And + delete_space | delete_space),
-                                                            )
+        #hundreds graph
+        hundreds_prefix_digits = ( (graph_digit | pynutil.insert("1")) + delete_space + pynutil.delete(cents_data) + ( ((delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en)) |
+                                                                                                     (pynutil.insert("0") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
+                                                                                                      pynutil.insert("00") ) )
 
-        graph_hundred_component_prefix_tens += pynini.union((graph_tens_en | graph_tens),
-                                                            (graph_ties | pynutil.insert("0")) + delete_space + (graph_digit | pynutil.insert("0")))
+        hundreds_prefix_tens = ( (graph_tens | graph_tens_en) + delete_space + pynutil.delete(cents_data) + ( ((delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en )) |
+                                                                                                     (pynutil.insert("0") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
+                                                                                                      pynutil.insert("00") ) )
 
-        # Although above two components have the capability to handle 1-99 also, but since we are combining both of them
-        # later on, ambiguity creeps in. So, we define a shorter fst below to handle the cases from 1-99 exclusively.
+        graph_hundred_component_at_least_one_none_zero_digit= ( hundred | hundreds_prefix_digits | hundreds_prefix_tens )
 
-        # graph_hundred_component_at_least_one_none_zero_digit = graph_hundred_component @ (
-        #         pynini.closure(HINDI_DIGIT_WITH_ZERO) + (HINDI_DIGIT_WITH_ZERO - "०") + pynini.closure(HINDI_DIGIT_WITH_ZERO)
-        # )
+        self.graph_hundred_component_at_least_one_none_zero_digit= (graph_hundred_component_at_least_one_none_zero_digit)
+         
+        #If thousand reference is present, then extract the before "non thousand" part, delete "thousand" and retrieve numbers
+        #else, just add 000
+        thousands_prefix_digits =  (graph_digit | pynutil.insert("1")) + delete_space + pynutil.delete(thousands_data) + ( (delete_space + graph_hundred_component_at_least_one_none_zero_digit) |
+                                                                                                       (pynutil.insert("0") + (delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en )) |
+                                                                                                       (pynutil.insert("00") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
+                                                                                                        pynutil.insert("000", weight= -0.1) )
 
-        #Handles 10-99 in both hi, en
-        graph_hundred_component_non_hundred = pynini.union((graph_tens_en | graph_tens),
-                                                            (graph_ties | pynutil.insert("0")) + delete_space + (graph_digit | pynutil.insert("0")))
+        thousands_prefix_tens =  (graph_tens | graph_tens_en) + delete_space + pynutil.delete(thousands_data) + ( (delete_space + graph_hundred_component_at_least_one_none_zero_digit) |
+                                                                                                       (pynutil.insert("0") + (delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en)) |
+                                                                                                       (pynutil.insert("00") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
+                                                                                                        pynutil.insert("000", weight= -0.1) )
 
-        #This thing now handles only 100-999 cases (in regular spoken form) and 1000-9999 (in hundred spoken form)
-        #Because of combining these both FSTs, there comes ambiguity while dealing with 1-99 cases.
-        graph_hundred_component = pynini.union(graph_hundred_component,
-                                               graph_hundred_component_prefix_tens)
-
-        graph_hundred_component_at_least_one_none_zero_digit = pynini.union(graph_hundred_component, graph_hundred_component_non_hundred)
-
+        thousands_prefix_hundreds =  (graph_hundred_component_at_least_one_none_zero_digit ) + delete_space + pynutil.delete(thousands_data) + ( (delete_space + graph_hundred_component_at_least_one_none_zero_digit) |
+                                                                                                       (pynutil.insert("0") + (delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en)) |
+                                                                                                       (pynutil.insert("00") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
+                                                                                                        pynutil.insert("000", weight= -0.1) )
 
 
-        self.graph_hundred_component_at_least_one_none_zero_digit = (
-            graph_hundred_component_at_least_one_none_zero_digit
-        )
+        graph_thousands = thousands_prefix_hundreds | thousands_prefix_tens | thousands_prefix_digits | thousand 
 
-        #If hazar reference is present, then extract the before "non hazar" part and delete "hazar"
-        #else, just add 00
-        #to make work 1000 changes are done
-        graph_thousands_component = pynini.union(
-            (graph_hundred_component_at_least_one_none_zero_digit + delete_space | pynutil.insert("1", weight=-0.1)) + pynutil.delete(thousands),
-            (pynutil.insert("0") + graph_hundred_component_prefix_tens),
-            pynutil.insert("00", weight=-0.1),
-        )
+        # Similarly lakhs graph
+        lakhs_prefix_digits =  (graph_digit | pynutil.insert("1")) + delete_space + pynutil.delete(lakhs_data) + ( (delete_space + thousands_prefix_tens) |
+                                                                                               (pynutil.insert("0")+ delete_space + thousands_prefix_digits) |
+                                                                                               (pynutil.insert("0")+ delete_space + hundreds_prefix_tens) |
+                                                                                               (pynutil.insert("00")+ delete_space + hundreds_prefix_digits) |
+                                                                                               (pynutil.insert("000") + (delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en )) |
+                                                                                               (pynutil.insert("0000") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
+                                                                                                pynutil.insert("00000", weight= -0.1) )
+        
+        lakhs_prefix_tens =  (graph_tens | graph_tens_en) + delete_space + pynutil.delete(lakhs_data) + ( (delete_space + thousands_prefix_tens) |
+                                                                                               (pynutil.insert("0")+ delete_space + thousands_prefix_digits) |
+                                                                                               (pynutil.insert("0")+ delete_space + hundreds_prefix_tens) |
+                                                                                               (pynutil.insert("00")+ delete_space + hundreds_prefix_digits) |
+                                                                                               (pynutil.insert("000") + (delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en )) |
+                                                                                               (pynutil.insert("0000") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
+                                                                                                pynutil.insert("00000", weight= -0.1) )
+ 
+        lakhs_prefix_hundreds =  (graph_hundred_component_at_least_one_none_zero_digit | graph_thousands ) + delete_space + pynutil.delete(lakhs_data) + ( (delete_space + thousands_prefix_tens) |
+                                                                                               (pynutil.insert("0")+ delete_space + thousands_prefix_digits) |
+                                                                                               (pynutil.insert("0")+ delete_space + hundreds_prefix_tens) |
+                                                                                               (pynutil.insert("00")+ delete_space + hundreds_prefix_digits) |
+                                                                                               (pynutil.insert("000") + (delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en )) |
+                                                                                               (pynutil.insert("0000") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
+                                                                                                pynutil.insert("00000", weight= -0.1) )
 
-        graph_lakhs_component = pynini.union(
-            (graph_hundred_component_at_least_one_none_zero_digit + delete_space | pynutil.insert("1", weight=-0.1)) + pynutil.delete(lakhs),
-            pynutil.insert("00", weight=-0.1)
-        )
+        graph_lakhs = lakh | lakhs_prefix_digits | lakhs_prefix_tens | lakhs_prefix_hundreds
 
-        graph_crores_component = pynini.union(
-            (graph_hundred_component_at_least_one_none_zero_digit + delete_space | pynutil.insert("1", weight=-0.1)) + pynutil.delete(crores),
-            pynutil.insert("00", weight=-0.1)
-        )
+        # crores graph
+        crores_prefix_digits = ( (graph_digit | pynutil.insert("1")) + delete_space + pynutil.delete(crores_data) + ( (delete_space + lakhs_prefix_tens) |
+                                                                                (pynutil.insert("0")+  delete_space + lakhs_prefix_digits) |
+                                                                                (pynutil.insert("0")+  delete_space + thousands_prefix_hundreds) |
+                                                                                (pynutil.insert("00")+ delete_space + thousands_prefix_tens) |
+                                                                                (pynutil.insert("000")+ delete_space + thousands_prefix_digits) |
+                                                                                (pynutil.insert("000")+ delete_space + hundreds_prefix_tens) |
+                                                                                (pynutil.insert("0000")+ delete_space + hundreds_prefix_digits) |
+                                                                                (pynutil.insert("00000") + (delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en )) |
+                                                                                (pynutil.insert("000000") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
+                                                                                pynutil.insert("0000000" , weight= -0.1) ) )
 
-        # fst = graph_thousands
-        fst = pynini.union(
-            graph_crores_component
-            + (delete_space | delete_space + del_And + delete_space)
-            + graph_lakhs_component
-            + (delete_space | delete_space + del_And + delete_space)
-            + (graph_thousands_component)
-            + (delete_space | delete_space + del_And + delete_space)
-            + (graph_hundred_component | pynutil.insert("", weight=0.1)),
-            graph_zero,
-        )
+        crores_prefix_tens = ( (graph_tens | graph_tens_en | graph_hundred_component_at_least_one_none_zero_digit | graph_thousands | graph_lakhs) + delete_space + pynutil.delete(crores_data) + ( (delete_space + lakhs_prefix_tens) |
+                                                                                (pynutil.insert("0")+  delete_space + lakhs_prefix_digits) |
+                                                                                (pynutil.insert("0")+  delete_space + thousands_prefix_hundreds) |
+                                                                                (pynutil.insert("00")+ delete_space + thousands_prefix_tens) |
+                                                                                (pynutil.insert("000")+ delete_space + thousands_prefix_digits) |
+                                                                                (pynutil.insert("000")+ delete_space + hundreds_prefix_tens) |
+                                                                                (pynutil.insert("0000")+ delete_space + hundreds_prefix_digits) |
+                                                                                (pynutil.insert("00000") + (delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en )) |
+                                                                                (pynutil.insert("000000") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
+                                                                                pynutil.insert("0000000" , weight= -0.1) ) )
+        
+        graph_crores = crore | crores_prefix_digits | crores_prefix_tens
 
-        fst_crore = fst+graph_crore # handles words like चार हज़ार करोड़
-        fst_lakh = fst+graph_lakh # handles words like चार हज़ार लाख
-        fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred, graph_zero, graph_multiples,graph_tens_en)
-        # fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred, graph_zero, graph_multiples)
+        # millions graph
+        millions_prefix_digits =  ( graph_digit | pynutil.insert("1")) + delete_space + pynutil.delete(millions_data) + ( (delete_space + thousands_prefix_hundreds) |
+                                                                                              (pynutil.insert("0")+ delete_space + thousands_prefix_tens) |
+                                                                                              (pynutil.insert("00")+ delete_space + thousands_prefix_digits) |
+                                                                                              (pynutil.insert("00")+ delete_space + hundreds_prefix_tens) |
+                                                                                              (pynutil.insert("000")+ delete_space + hundreds_prefix_digits) |
+                                                                                              (pynutil.insert("0000") + (delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en )) |
+                                                                                              (pynutil.insert("00000") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
+                                                                                                pynutil.insert("000000", weight= -0.1) )
+        
+        millions_prefix_tens =  (graph_tens | graph_tens_en ) + delete_space + pynutil.delete(millions_data) + ( (delete_space + thousands_prefix_hundreds) |
+                                                                                              (pynutil.insert("0")+ delete_space + thousands_prefix_tens) |
+                                                                                              (pynutil.insert("00")+ delete_space + thousands_prefix_digits) |
+                                                                                              (pynutil.insert("00")+ delete_space + hundreds_prefix_tens) |
+                                                                                              (pynutil.insert("000")+ delete_space + hundreds_prefix_digits) |
+                                                                                              (pynutil.insert("0000") + (delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en )) |
+                                                                                              (pynutil.insert("00000") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
+                                                                                               pynutil.insert("000000", weight= -0.1) )
 
+        millions_prefix_hundreds =  (graph_hundred_component_at_least_one_none_zero_digit | graph_thousands| graph_lakhs | graph_crores) + delete_space + pynutil.delete(millions_data) + ( (delete_space + thousands_prefix_hundreds) |
+                                                                                              (pynutil.insert("0")+ delete_space + thousands_prefix_tens) |
+                                                                                              (pynutil.insert("00")+ delete_space + thousands_prefix_digits) |
+                                                                                              (pynutil.insert("00")+ delete_space + hundreds_prefix_tens) |
+                                                                                              (pynutil.insert("000")+ delete_space + hundreds_prefix_digits) |
+                                                                                              (pynutil.insert("0000") + (delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en )) |
+                                                                                              (pynutil.insert("00000") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
+                                                                                               pynutil.insert("000000", weight= -0.1) )
+ 
+        graph_millions = million | millions_prefix_digits | millions_prefix_tens | millions_prefix_hundreds
+
+        # billions graph
+        billions_all =  (graph_digit | pynutil.insert("1") | graph_tens | graph_tens_en | graph_hundred_component_at_least_one_none_zero_digit | graph_lakhs | graph_crores | graph_millions) + delete_space + pynutil.delete(billions_data) + ( (delete_space + millions_prefix_hundreds) |
+                                                                                        (pynutil.insert("0")+ delete_space + millions_prefix_tens) |
+                                                                                        (pynutil.insert("00")+ delete_space + millions_prefix_digits) |
+                                                                                        (pynutil.insert("0")+  delete_space + lakhs_prefix_hundreds) |
+                                                                                        (pynutil.insert("00")+  delete_space + lakhs_prefix_tens) |
+                                                                                        (pynutil.insert("000")+  delete_space + lakhs_prefix_digits) |
+                                                                                        (pynutil.insert("000") + delete_space + thousands_prefix_hundreds) |
+                                                                                        (pynutil.insert("0000")+ delete_space + thousands_prefix_tens) |
+                                                                                        (pynutil.insert("00000")+ delete_space + thousands_prefix_digits) |
+                                                                                        (pynutil.insert("00000")+ delete_space + hundreds_prefix_tens) |
+                                                                                        (pynutil.insert("000000")+ delete_space + hundreds_prefix_digits) |
+                                                                                        (pynutil.insert("0000000") + (delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en )) |
+                                                                                        (pynutil.insert("00000000") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
+                                                                                        pynutil.insert("000000000", weight= -0.1) )
+  
+        graph_billions = billion | billions_all
+
+        fst = (  graph_zero |
+                    graph_tens |
+                    graph_tens_en |
+                    graph_digit |
+                    graph_hundred_component_at_least_one_none_zero_digit |
+                    graph_thousands |
+                    graph_lakhs |
+                    graph_crores |
+                    graph_millions |
+                    graph_billions |
+                    # graph_chars |
+                    graph_multiples
+                    # graph_char_multiples 
+                    )
 
         # labels_exception = [num_to_word(x) for x in range(1, 3)]
         # graph_exception = pynini.union(*labels_exception)
