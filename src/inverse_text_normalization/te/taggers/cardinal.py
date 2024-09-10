@@ -248,6 +248,7 @@ class CardinalFst(GraphFst):
                     # graph_char_multiples 
                     )
 
+        fst = fst.optimize()
 
         self.graph_no_exception = fst
 

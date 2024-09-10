@@ -176,7 +176,9 @@ class CardinalFst(GraphFst):
                     graph_crores |
                     graph_multiples|
                     tamil_graph_exception_list )
-        
+    
+        fst = fst.optimize()
+
         self.graph_no_exception = fst
         self.graph = fst
 

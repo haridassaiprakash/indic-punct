@@ -238,6 +238,8 @@ class CardinalFst(GraphFst):
                     graph_multiples
                     # graph_char_multiples 
                     )
+        fst = fst.optimize()
+
         # fst = pynini.union(fst, fst_crore, fst_lakh, graph_crore, graph_lakh, graph_thousand, graph_hundred, graph_zero, graph_multiples)
 
         # labels_exception = [num_to_word(x) for x in range(1, 3)]

@@ -166,6 +166,7 @@ class CardinalFst(GraphFst):
         fst_crore = fst + graph_crore  # handles words like चार हज़ार करोड़
         fst_lakh = fst + graph_lakh  # handles words like चार हज़ार लाख
         fst = pynini.union(fst, fst_crore, fst_lakh)
+        fst = fst.optimize()
 
         self.graph_no_exception = fst
 
