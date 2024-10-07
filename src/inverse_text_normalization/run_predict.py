@@ -16,6 +16,8 @@ from inverse_text_normalization.ur.run_predict import inverse_normalize_text as 
 from inverse_text_normalization.bho.run_predict import inverse_normalize_text as bho_itn
 from inverse_text_normalization.brx.run_predict import inverse_normalize_text as brx_itn
 from inverse_text_normalization.doi.run_predict import inverse_normalize_text as doi_itn
+from inverse_text_normalization.sat.run_predict import inverse_normalize_text as sat_itn
+from inverse_text_normalization.ks.run_predict import inverse_normalize_text as ks_itn
 
 def format_numbers_with_commas(sent, lang):
     words = []
@@ -55,96 +57,93 @@ def inverse_normalize_text(text_list, lang):
         itn_results = hi_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang=lang) for sent in itn_results]
         return itn_results_formatted
+
     elif lang in ['en', 'en_bio']:
         itn_results = en_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
+
     elif lang == 'ta':
         itn_results = ta_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
+
     elif lang == 'or':
         itn_results = or_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
-    
-    #     return itn_results_formatted
+
     elif lang == 'gu':
         itn_results = gu_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
 
-    elif lang == 'te':
-
+    if lang == 'te':
         itn_results = te_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
 
-    elif lang == 'mr':
-
+    if lang == 'mr':
         itn_results = mr_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
 
     elif lang == 'pa':
-
         itn_results = pa_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
 
-
     elif lang == 'bn':
-
         itn_results = bn_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
 
     elif lang == 'ml':
-
         itn_results = ml_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
 
     elif lang == 'as':
-
         itn_results = as_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
 
-    
     elif lang == 'kn':
-
         itn_results = kn_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
-    
-    elif lang == 'ur':
 
+    elif lang == 'ur':
         itn_results = ur_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
- 
-    elif lang == 'sa':
 
+    elif lang == 'sa':
         itn_results = sa_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
 
     elif lang == 'bho':
-
         itn_results = bho_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
 
     elif lang == 'brx':
-
         itn_results = brx_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
-    
-    elif lang == 'doi':
 
+    elif lang == 'doi':
         itn_results = doi_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
 
+    elif lang == 'sat':
+        itn_results = sat_itn(text_list)
+        itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
+        return itn_results_formatted
+        
+    elif lang == 'ks':
+        itn_results = ks_itn(text_list)
+        itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
+        return itn_results_formatted

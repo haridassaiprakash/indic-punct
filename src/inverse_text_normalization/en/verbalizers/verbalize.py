@@ -20,7 +20,7 @@ from inverse_text_normalization.en.verbalizers.decimal import DecimalFst
 from inverse_text_normalization.en.verbalizers.measure import MeasureFst
 from inverse_text_normalization.en.verbalizers.money import MoneyFst
 from inverse_text_normalization.en.verbalizers.ordinal import OrdinalFst
-from inverse_text_normalization.en.verbalizers.time import TimeFst
+# from inverse_text_normalization.en.verbalizers.time import TimeFst
 from inverse_text_normalization.en.verbalizers.whitelist import WhiteListFst
 
 
@@ -35,10 +35,10 @@ class VerbalizeFst(GraphFst):
         ordinal = OrdinalFst().fst
         decimal = DecimalFst().fst
         measure = MeasureFst().fst
-        time = TimeFst().fst
+        # time = TimeFst().fst
         date = DateFst().fst
         money = MoneyFst().fst
         whitelist = WhiteListFst().fst
         # graph = time | date | measure | ordinal | decimal | cardinal | whitelist
-        graph = time | date | money | measure | ordinal | decimal | cardinal | whitelist
+        graph = date | money | measure | ordinal | decimal | cardinal | whitelist
         self.fst = graph

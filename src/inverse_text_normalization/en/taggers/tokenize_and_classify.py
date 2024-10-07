@@ -19,7 +19,7 @@ from inverse_text_normalization.en.taggers.decimal import DecimalFst
 from inverse_text_normalization.en.taggers.measure import MeasureFst
 from inverse_text_normalization.en.taggers.money import MoneyFst
 from inverse_text_normalization.en.taggers.ordinal import OrdinalFst
-from inverse_text_normalization.en.taggers.time import TimeFst
+# from inverse_text_normalization.en.taggers.time import TimeFst
 from inverse_text_normalization.en.taggers.whitelist import WhiteListFst
 from inverse_text_normalization.en.taggers.word import WordFst
 
@@ -51,13 +51,13 @@ class ClassifyFst(GraphFst):
         measure = MeasureFst(cardinal_graph_fst, decimal_graph_fst).fst
         date = DateFst(ordinal_graph_fst).fst
         word = WordFst().fst
-        time = TimeFst().fst
+        # time = TimeFst().fst
         money = MoneyFst(cardinal_graph_fst, decimal_graph_fst).fst
         whitelist = WhiteListFst().fst
 
         graph = (
             pynutil.add_weight(whitelist, 1.01)
-            | pynutil.add_weight(time, 1.1)
+            # | pynutil.add_weight(time, 1.1)
             | pynutil.add_weight(date, 1.09)
             | pynutil.add_weight(decimal, 1.1)
             | pynutil.add_weight(measure, 1.1)
