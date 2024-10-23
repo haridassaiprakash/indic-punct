@@ -19,6 +19,7 @@ from inverse_text_normalization.en.graph_utils import (
     delete_extra_space,
     delete_space,
 )
+data_path = 'data/'
 
 try:
     import pynini
@@ -33,7 +34,10 @@ def get_quantity(deci, cardinal_graph_hundred_component_at_least_one_none_zero_d
     numbers = cardinal_graph_hundred_component_at_least_one_none_zero_digit @ (
         pynutil.delete(pynini.closure("0")) + pynini.difference(NEMO_DIGIT, "0") + pynini.closure(NEMO_DIGIT)
     )
-    suffix = pynini.union("million", "billion", "trillion", "quadrillion", "quintillion", "sextillion")
+    with open(get_abs_path(data_path + "number_suffixes.tsv"), encoding='utf-8') as f:        
+        suffixes = [line.strip() for line in f]
+    
+    suffix = pynini.union(*suffixes)
     res = (
         pynutil.insert("integer_part: \"")
         + numbers
@@ -43,7 +47,7 @@ def get_quantity(deci, cardinal_graph_hundred_component_at_least_one_none_zero_d
         + suffix
         + pynutil.insert("\"")
     )
-    res |= deci + delete_extra_space + pynutil.insert("quantity: \"") + (suffix | "thousand") + pynutil.insert("\"")
+    res |= deci + delete_extra_space + pynutil.insert("quantity: \"") + (suffix ) + pynutil.insert("\"")
     return res
 
 
