@@ -77,9 +77,9 @@ class CardinalFst(GraphFst):
         cents_data = pynini.accep("सौ") | pynini.accep("हंड्रेड") | pynini.accep("हन्ड्रड") | pynini.accep("हंडरेड")
         thousands_data = pynini.accep("थाउज़न्ड") | pynini.accep("हज़ार") | pynini.accep("थाउज़ेंड") | pynini.accep("हजार") | pynini.accep("थाउजेंड") | pynini.accep("थाउसेंड्स")
         lakhs_data = pynini.accep("लाख") | pynini.accep("लैक") | pynini.accep("लेक") | pynini.accep("लाक")
-        crores_data = pynini.accep("करोड़") | pynini.accep("क्रोर") | pynini.accep("क्रोर्स")
+        crores_data = pynini.accep("करोड़") | pynini.accep("क्रोर") | pynini.accep("क्रोर्स") | pynini.accep("करोड")
         millions_data =  pynini.accep("मिलियन") | pynini.accep("मिलियंस")
-        billions_data =  pynini.accep("बिलियन") | pynini.accep("बिलियंस")
+        billions_data =  pynini.accep("बिलियन") | pynini.accep("बिलियंस") | pynini.accep("अरब")
 
 
         del_And = pynutil.delete(pynini.closure(pynini.accep("एंड"), 1 ,1 ))
@@ -87,9 +87,9 @@ class CardinalFst(GraphFst):
         hundred = pynini.cross("सौ", "100") | pynini.cross("हंड्रेड", "100") | pynini.cross("हन्ड्रड", "100") | pynini.cross("हंडरेड", "100")
         thousand  = pynini.cross("हज़ार", "1000") | pynini.cross("थाउज़न्ड", "1000") | pynini.cross("थाउज़ेंड", "1000") | pynini.cross("थाउजेंड", "1000") | pynini.cross("हजार", "1000") | pynini.cross("थाउसेंड्स", "1000")
         lakh = pynini.cross("लाख", "100000") | pynini.cross("लैक", "100000") | pynini.cross("लेक", "100000")  | pynini.cross("लाक", "100000")
-        crore = pynini.cross("करोड़", "10000000") | pynini.cross("क्रोर", "10000000") | pynini.cross("क्रोर्स", "10000000")
+        crore = pynini.cross("करोड़", "10000000") | pynini.cross("क्रोर", "10000000") | pynini.cross("क्रोर्स", "10000000") | pynini.cross("करोड", "10000000")
         million =  pynini.cross("मिलियन", "1000000") | pynini.cross("मिलियंस", "1000000")
-        billion =  pynini.cross("बिलियन", "1000000000") | pynini.cross("बिलियंस", "1000000000")
+        billion =  pynini.cross("बिलियन", "1000000000") | pynini.cross("बिलियंस", "1000000000") | pynini.cross("अरब", "1000000000")
         
         #hundreds graph
         hundreds_prefix_digits = ( (graph_digit | pynutil.insert("1")) + delete_space + pynutil.delete(cents_data) + ( ((delete_space + del_And + delete_space | delete_space) + (graph_tens | graph_tens_en)) |
@@ -259,4 +259,5 @@ class CardinalFst(GraphFst):
         final_graph = optional_minus_graph + pynutil.insert("integer: \"") + self.graph + pynutil.insert("\"")
 
         final_graph = self.add_tokens(final_graph)
+        # self.fst = final_graph.optimize()
         self.fst = final_graph.optimize()
