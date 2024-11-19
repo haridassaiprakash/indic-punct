@@ -12,20 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-from inverse_text_normalization.hi.graph_utils import GraphFst
+from inverse_text_normalization.en.graph_utils import GraphFst
 import pynini
 from pynini.lib import pynutil, utf8
 
-from inverse_text_normalization.hi.data_loader_utils import get_abs_path
-from inverse_text_normalization.hi.graph_utils import (
+from inverse_text_normalization.en.data_loader_utils import get_abs_path
+from inverse_text_normalization.en.graph_utils import (
     NEMO_DIGIT,
     GraphFst,
     delete_space,
     delete_extra_space,
+    insert_space
 )
-from inverse_text_normalization.hi.utils import num_to_word
-# from inverse_text_normalization.lang_params import LANG
-# data_path = f'data/{LANG}_data/'
+from inverse_text_normalization.en.utils import num_to_word
+
 data_path = 'data/'
 
 try:
@@ -49,27 +49,35 @@ def get_quantity(frac, cardinal_graph_hundred_component_at_least_one_none_zero_d
     return res
 
 
-class FractionFst(GraphFst):
+class FractionnewFst(GraphFst):
     """
     Finite state transducer for classifying fraction
-        e.g. साढ़े तीन हजार -> fraction { fractional_part: "3.5" quantity: "हजार" }
+        e.g. three and half hundred ->  { fraction { integer_part: 3 fractional_part:.5 quantity: "hundred" } }
 
     cardinal: Cardinal GraphFst
     """
 
-    def __init__(self, cardinal: GraphFst):
-        super().__init__(name="fraction", kind="classify")
+    def __init__(self, cardinal: GraphFst, ordinal: GraphFst):
+        super().__init__(name="fractionnew", kind="classify")
+        # integer_part # numerator # denominator
 
         cardinal_graph = cardinal.graph_no_exception
         cardinal_graph_hundred_component_at_least_one_none_zero_digit = (
             cardinal.graph_hundred_component_at_least_one_none_zero_digit
         )
-        graph_fraction = pynini.string_file(get_abs_path(data_path + "fractions.tsv"))
+        ordinal_graph = ordinal.graph
 
-        graph_fractional = pynutil.insert("fractional_part: \"") + graph_fraction + pynutil.insert("\"")
+        del_And = pynutil.delete(pynini.closure(pynini.accep("and"), 1 ,1 ))
 
-        final_graph = graph_fractional | get_quantity(
-            graph_fractional, cardinal_graph_hundred_component_at_least_one_none_zero_digit
+        graph_fraction = pynini.cross("half", ".5") | pynini.cross("and half", ".5")
+
+        graph_fractional = pynutil.insert("fractional_part: \"") + graph_fraction  + pynutil.insert("\"")
+        
+        graph_integer = pynutil.insert("integer_part: \"") + cardinal_graph + pynutil.insert("\"")
+        
+        final_graph_wo_sign = graph_integer + delete_space  + graph_fractional
+        final_graph = final_graph_wo_sign | get_quantity(
+            final_graph_wo_sign, cardinal_graph_hundred_component_at_least_one_none_zero_digit
         )
 
         final_graph = self.add_tokens(final_graph)

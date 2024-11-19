@@ -27,6 +27,7 @@ exec(f"from {lang_taggers}.ordinal import OrdinalFst")
 exec(f"from {lang_taggers}.time import TimeFst")
 exec(f"from {lang_taggers}.whitelist import WhiteListFst")
 exec(f"from {lang_taggers}.word import WordFst")
+exec(f"from {lang_taggers}.fraction import FractionFst")
 
 try:
     from pynini.lib import pynutil
@@ -53,6 +54,8 @@ class ClassifyFst(GraphFst):
         decimal_graph_fst = DecimalFst(cardinal_graph_fst)
         decimal = decimal_graph_fst.fst
 
+        fraction_graph_fst = FractionFst(cardinal_graph_fst)
+        fraction = fraction_graph_fst.fst
         # measure = MeasureFst(cardinal_graph_fst, decimal_graph_fst).fst
         # date = DateFst(ordinal_graph_fst).fst
         word = WordFst().fst
@@ -65,6 +68,7 @@ class ClassifyFst(GraphFst):
             # | pynutil.add_weight(time, 1.1)
             # | pynutil.add_weight(date, 1.09)
             pynutil.add_weight(decimal, 1.1)
+            | pynutil.add_weight(fraction, 1.1)
             # | pynutil.add_weight(measure, 1.1)
             | pynutil.add_weight(cardinal, 1.1)
             # | pynutil.add_weight(ordinal, 1.1)

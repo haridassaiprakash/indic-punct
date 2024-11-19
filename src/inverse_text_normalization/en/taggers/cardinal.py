@@ -92,6 +92,8 @@ class CardinalFst(GraphFst):
         crore = pynini.cross("crore", "10000000") | pynini.cross("crores", "10000000")
         million =  pynini.cross("million", "1000000") | pynini.cross("millions", "1000000")
         billion =  pynini.cross("billion", "1000000000") | pynini.cross("billions", "1000000000")
+
+        graph_fraction = pynini.cross("half", "0.5") | pynini.cross("one fourth", "0.25") | pynini.cross("three fourth", "0.75")
         
         #hundreds graph
         hundreds_prefix_digits = ( (graph_digit | pynutil.insert("1")) + delete_space + pynutil.delete(cents_data) + ( ((delete_space + del_And + delete_space | delete_space) + (graph_tens)) |
@@ -201,7 +203,7 @@ class CardinalFst(GraphFst):
                                                                                               (pynutil.insert("0")+ (delete_space + del_And + delete_space | delete_space) + thousands_prefix_tens) |
                                                                                               (pynutil.insert("00")+ (delete_space + del_And + delete_space | delete_space) + thousands_prefix_digits) |
                                                                                               (pynutil.insert("00")+ (delete_space + del_And + delete_space | delete_space) + hundreds_prefix_tens) |
-                                                                                              (pynutil.insert("000")+ (delete_space + del_And + delete_space | delete_space)+ hundreds_prefix_digits) |
+                                                                                              (pynutil.insert("000")+ (delete_space + del_And + delete_space | delete_space) + hundreds_prefix_digits) |
                                                                                               (pynutil.insert("0000") + (delete_space + del_And + delete_space | delete_space) + (graph_tens )) |
                                                                                               (pynutil.insert("00000") + (delete_space + del_And + delete_space | delete_space) + graph_digit) |
                                                                                                pynutil.insert("000000", weight= -0.1) )
@@ -236,7 +238,8 @@ class CardinalFst(GraphFst):
                     graph_millions |
                     graph_billions |
                     # graph_chars |
-                    graph_multiples
+                    graph_multiples |
+                    graph_fraction
                     # graph_char_multiples 
                     )
         fst = fst.optimize()

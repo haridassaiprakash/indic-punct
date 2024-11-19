@@ -22,6 +22,8 @@ from inverse_text_normalization.en.taggers.ordinal import OrdinalFst
 # from inverse_text_normalization.en.taggers.time import TimeFst
 from inverse_text_normalization.en.taggers.whitelist import WhiteListFst
 from inverse_text_normalization.en.taggers.word import WordFst
+from inverse_text_normalization.en.taggers.fraction import FractionFst
+from inverse_text_normalization.en.taggers.fractionnew import FractionnewFst
 
 try:
     from pynini.lib import pynutil
@@ -51,6 +53,12 @@ class ClassifyFst(GraphFst):
         measure = MeasureFst(cardinal_graph_fst, decimal_graph_fst).fst
         date = DateFst(ordinal_graph_fst).fst
         word = WordFst().fst
+        
+        fraction_graph_fst = FractionFst(cardinal_graph_fst,ordinal_graph_fst)
+        fraction = fraction_graph_fst.fst
+
+        fractionnew_graph_fst = FractionnewFst(cardinal_graph_fst,ordinal_graph_fst)
+        fractionnew = fractionnew_graph_fst.fst
         # time = TimeFst().fst
         money = MoneyFst(cardinal_graph_fst, decimal_graph_fst).fst
         whitelist = WhiteListFst().fst
@@ -59,6 +67,8 @@ class ClassifyFst(GraphFst):
             pynutil.add_weight(whitelist, 1.01)
             # | pynutil.add_weight(time, 1.1)
             | pynutil.add_weight(date, 1.09)
+            | pynutil.add_weight(fraction, 1.1)
+            | pynutil.add_weight(fractionnew, 1.1)
             | pynutil.add_weight(decimal, 1.1)
             | pynutil.add_weight(measure, 1.1)
             | pynutil.add_weight(cardinal, 1.1)
