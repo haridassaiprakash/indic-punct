@@ -22,6 +22,7 @@ from inverse_text_normalization.hi.verbalizers.money import MoneyFst
 # from inverse_text_normalization.hi.verbalizers.ordinal import OrdinalFst
 # from inverse_text_normalization.hi.verbalizers.time import TimeFst
 # from inverse_text_normalization.hi.verbalizers.whitelist import WhiteListFst
+from inverse_text_normalization.hi.verbalizers.fraction import FractionFst
 
 
 class VerbalizeFst(GraphFst):
@@ -34,11 +35,12 @@ class VerbalizeFst(GraphFst):
         cardinal = CardinalFst().fst
         # ordinal = OrdinalFst().fst
         decimal = DecimalFst().fst
+        fraction = FractionFst().fst
         # measure = MeasureFst().fst
         # time = TimeFst().fst
         # date = DateFst().fst
         money = MoneyFst().fst
         # whitelist = WhiteListFst().fst
-        graph =  decimal | cardinal | money
+        graph =  fraction | decimal | cardinal | money
         # graph = time | date | money | measure | ordinal | decimal | cardinal | whitelist
         self.fst = graph
