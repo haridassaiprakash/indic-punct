@@ -18,6 +18,8 @@ from inverse_text_normalization.brx.run_predict import inverse_normalize_text as
 from inverse_text_normalization.doi.run_predict import inverse_normalize_text as doi_itn
 from inverse_text_normalization.sat.run_predict import inverse_normalize_text as sat_itn
 from inverse_text_normalization.ks.run_predict import inverse_normalize_text as ks_itn
+from inverse_text_normalization.sd.run_predict import inverse_normalize_text as sd_itn
+from inverse_text_normalization.gom.run_predict import inverse_normalize_text as gom_itn
 
 def format_numbers_with_commas(sent, lang):
     words = []
@@ -145,5 +147,15 @@ def inverse_normalize_text(text_list, lang):
         
     elif lang == 'ks':
         itn_results = ks_itn(text_list)
+        itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
+        return itn_results_formatted
+
+    elif lang == 'sd':
+        itn_results = sd_itn(text_list)
+        itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
+        return itn_results_formatted
+
+    elif lang == 'gom':
+        itn_results = gom_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
