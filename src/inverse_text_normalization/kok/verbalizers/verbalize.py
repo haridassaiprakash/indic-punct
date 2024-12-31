@@ -16,9 +16,9 @@
 from inverse_text_normalization.kok.graph_utils import GraphFst
 from inverse_text_normalization.kok.verbalizers.cardinal import CardinalFst
 # from inverse_text_normalization.kok.verbalizers.date import DateFst
-from inverse_text_normalization.kok.verbalizers.decimal import DecimalFst
+# from inverse_text_normalization.kok.verbalizers.decimal import DecimalFst
 # from inverse_text_normalization.kok.verbalizers.measure import MeasureFst
-from inverse_text_normalization.kok.verbalizers.money import MoneyFst
+# from inverse_text_normalization.kok.verbalizers.money import MoneyFst
 # from inverse_text_normalization.kok.verbalizers.ordinal import OrdinalFst
 # from inverse_text_normalization.kok.verbalizers.time import TimeFst
 # from inverse_text_normalization.kok.verbalizers.whitelist import WhiteListFst
@@ -33,12 +33,12 @@ class VerbalizeFst(GraphFst):
         super().__init__(name="verbalize", kind="verbalize")
         cardinal = CardinalFst().fst
         # ordinal = OrdinalFst().fst
-        decimal = DecimalFst().fst
+        # decimal = DecimalFst().fst
         # measure = MeasureFst().fst
         # time = TimeFst().fst
         # date = DateFst().fst
-        money = MoneyFst().fst
+        # money = MoneyFst().fst
         # whitelist = WhiteListFst().fst
-        graph = decimal | cardinal | money
+        graph = cardinal
         # graph = time | date | money | measure | ordinal | decimal | cardinal | whitelist
         self.fst = graph
