@@ -72,11 +72,11 @@ class CardinalFst(GraphFst):
 
         graph_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples.tsv"))
         # graph_ties = pynini.string_file(get_abs_path(data_path + "numbers/ties.tsv"))
-        graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
-        graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
+        # graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
+        # graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
         graph_tens_en = pynini.string_file(get_abs_path(data_path + "numbers/tens-en.tsv"))
 
-        cents_data = pynini.accep("सौ") | pynini.accep("हंड्रेड") | pynini.accep("हन्ड्रड") | pynini.accep("हंडरेड") | pynini.accep("शेंबोर") | pynini.accep("शेंबर")
+        cents_data = pynini.accep("सौ") | pynini.accep("हंड्रेड") | pynini.accep("हन्ड्रड") | pynini.accep("हंडरेड") | pynini.accep("शेंबोर") | pynini.accep("शेंबर") | pynini.accep("शें")
         thousands_data = pynini.accep("थाउज़न्ड") | pynini.accep("हज़ार") | pynini.accep("थाउज़ेंड") | pynini.accep("हजार") | pynini.accep("थाउजेंड") | pynini.accep("थाउसेंड्स") | pynini.accep("होजार") | pynini.accep("ओझर")
         lakhs_data = pynini.accep("लाख") | pynini.accep("लैक") | pynini.accep("लेक") | pynini.accep("लाक") | pynini.accep("लक")
         crores_data = pynini.accep("करोड़") | pynini.accep("क्रोर") | pynini.accep("क्रोर्स") | pynini.accep("करोड") | pynini.accep("कृत्त") | pynini.accep("कृत")
@@ -84,7 +84,7 @@ class CardinalFst(GraphFst):
 
         del_And = pynutil.delete(pynini.closure(pynini.accep("एंड"), 1 ,1 ))
         
-        hundred = pynini.cross("सौ", "100") | pynini.cross("हंड्रेड", "100") | pynini.cross("हन्ड्रड", "100") | pynini.cross("हंडरेड", "100") | pynini.cross("शेंबोर", "100") | pynini.cross("शेंबर", "100")
+        hundred = pynini.cross("सौ", "100") | pynini.cross("हंड्रेड", "100") | pynini.cross("हन्ड्रड", "100") | pynini.cross("हंडरेड", "100") | pynini.cross("शेंबोर", "100") | pynini.cross("शेंबर", "100") | pynini.cross("शें", "100")
         thousand  = pynini.cross("हज़ार", "1000") | pynini.cross("थाउज़न्ड", "1000") | pynini.cross("थाउज़ेंड", "1000") | pynini.cross("थाउजेंड", "1000") | pynini.cross("हजार", "1000") | pynini.cross("थाउसेंड्स", "1000") | pynini.cross("होजार", "1000") | pynini.cross("ओझर", "1000")
         lakh = pynini.cross("लाख", "100000") | pynini.cross("लैक", "100000") | pynini.cross("लेक", "100000")  | pynini.cross("लाक", "100000")  | pynini.cross("लक", "100000")
         crore = pynini.cross("करोड़", "10000000") | pynini.cross("क्रोर", "10000000") | pynini.cross("क्रोर्स", "10000000") | pynini.cross("करोड", "10000000") | pynini.cross("कृत्त", "10000000") | pynini.cross("कृत", "10000000")
@@ -182,9 +182,9 @@ class CardinalFst(GraphFst):
                     graph_thousands |
                     graph_lakhs |
                     graph_crores |
-                    graph_chars |
-                    graph_multiples |
-                    graph_char_multiples 
+                    # graph_chars |
+                    graph_multiples
+                    # graph_char_multiples 
                     )
         fst = fst.optimize()
         
