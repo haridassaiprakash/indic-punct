@@ -73,6 +73,7 @@ class CardinalFst(GraphFst):
         # graph_chars = pynini.string_file(get_abs_path(data_path + "numbers/alphabets.tsv"))
         # graph_char_multiples = pynini.string_file(get_abs_path(data_path + "numbers/multiples_alphabets.tsv"))
         graph_tens_en = pynini.string_file(get_abs_path(data_path + "numbers/tens-en.tsv"))
+        graph_special_chars = pynini.string_file(get_abs_path(data_path + "numbers/special_characters.tsv"))
 
         cents_data = pynini.accep("सौ") | pynini.accep("हंड्रेड") | pynini.accep("हन्ड्रड") | pynini.accep("हंडरेड")
         thousands_data = pynini.accep("थाउज़न्ड") | pynini.accep("हज़ार") | pynini.accep("थाउज़ेंड") | pynini.accep("हजार") | pynini.accep("थाउजेंड") | pynini.accep("थाउसेंड्स")
