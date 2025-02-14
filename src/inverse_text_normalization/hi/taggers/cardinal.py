@@ -236,7 +236,8 @@ class CardinalFst(GraphFst):
                     graph_millions |
                     graph_billions |
                     # graph_chars |
-                    graph_multiples
+                    graph_multiples |
+                    graph_special_chars
                     # graph_char_multiples 
                     )
         fst = fst.optimize()
