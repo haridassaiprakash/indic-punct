@@ -1,3 +1,7 @@
+import os
+import csv
+from rapidfuzz import process, fuzz
+
 from inverse_text_normalization.hi.run_predict import inverse_normalize_text as hi_itn
 from inverse_text_normalization.en.run_predict import inverse_normalize_text as en_itn
 from inverse_text_normalization.gu.run_predict import inverse_normalize_text as gu_itn
@@ -20,6 +24,48 @@ from inverse_text_normalization.sat.run_predict import inverse_normalize_text as
 from inverse_text_normalization.ks.run_predict import inverse_normalize_text as ks_itn
 from inverse_text_normalization.sd.run_predict import inverse_normalize_text as sd_itn
 from inverse_text_normalization.kok.run_predict import inverse_normalize_text as kok_itn
+
+data_path = "inverse_text_normalization/gu/data/numbers"
+allowed_files = {"zero.tsv", "tens.tsv", "digit.tsv", "tens_en.tsv"}
+dictionary = {}
+
+def load_data():
+    """Load only specific TSV files from the data folder for fuzzy matching."""
+    global dictionary
+
+    if not os.path.exists(data_path):
+        print(f"Error: Data folder not found at {data_path}")
+        return
+
+    for file_name in allowed_files:
+        file_path = os.path.join(data_path, file_name)
+        
+        if os.path.isfile(file_path):
+            with open(file_path, encoding="utf-8") as f:
+                reader = csv.reader(f, delimiter="\t")  
+                for row in reader:
+                    if len(row) == 2:
+                        alternative_spelling, correct_number = row
+                        dictionary[alternative_spelling] = correct_number  
+
+# Load data on startup
+load_data()
+
+def fuzzy_match_token(token, threshold=80):
+    if token.isdigit():
+        return token 
+    
+    result = process.extractOne(token, dictionary.keys(), scorer=fuzz.ratio)
+    if result and result[1] >= threshold:
+        return dictionary[result[0]]
+    return token  
+
+def apply_fuzzy_search(text):
+    """Apply fuzzy matching"""
+    words = text.split()
+    corrected_words = [fuzzy_match_token(word) for word in words]
+    return " ".join(corrected_words)
+
 
 def format_numbers_with_commas(sent, lang):
     words = []
@@ -71,8 +117,9 @@ def inverse_normalize_text(text_list, lang):
         itn_results = or_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
-    elif lang == 'gu':
-        itn_results = gu_itn(text_list)
+    if lang == 'gu':
+        corrected_text_list = [apply_fuzzy_search(text) for text in text_list]
+        itn_results = gu_itn(corrected_text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'te':
