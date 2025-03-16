@@ -1,31 +1,29 @@
-import os
 import csv
 from rapidfuzz import process, fuzz
+from inverse_text_normalization.gu.data_loader_utils import get_abs_path
 
 allowed_files = {"zero.tsv", "tens.tsv", "digit.tsv", "tens_en.tsv"}
-data_path = "inverse_text_normalization/gu/data/numbers"
-dictionary = {}  
+data_path = "data/numbers/"
 
 def load_data():
     """Load only specific TSV files from the data folder for fuzzy matching."""
-    global dictionary
-
-    if not os.path.exists(data_path):
-        print(f"Error: Data folder not found at {data_path}")
-        return
+    dictionary = {}
 
     for file_name in allowed_files:
-        file_path = os.path.join(data_path, file_name)
+        file_path = get_abs_path(data_path + file_name)
+        print(file_path)
         
-        if os.path.isfile(file_path):
-            with open(file_path, encoding="utf-8") as f:
-                reader = csv.reader(f, delimiter="\t")  
-                for row in reader:
-                    if len(row) == 2:
-                        alternative_spelling, correct_number = row
-                        dictionary[alternative_spelling] = correct_number  
+        with open(file_path, encoding="utf-8") as f:
+            reader = csv.reader(f, delimiter="\t")  
+            for row in reader:
+                if len(row) == 2:
+                    alternative_spelling, correct_number = row
+                    dictionary[alternative_spelling] = correct_number  
 
-load_data()
+    return dictionary
+
+# Load data into a dictionary
+dictionary = load_data()
 
 def fuzzy_match_token(token, threshold=80):
     if token.isdigit():
