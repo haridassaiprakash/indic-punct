@@ -1,16 +1,16 @@
-import os
 import csv
 from rapidfuzz import process, fuzz
+from inverse_text_normalization.gu.data_loader_utils import get_abs_path
 
 allowed_files = {"zero.tsv", "tens.tsv", "digit.tsv", "tens_en.tsv"}
-data_path = "inverse_text_normalization/gu/data/numbers"
+data_path = "data/numbers/"
 
 def load_data():
     """Load only specific TSV files from the data folder for fuzzy matching."""
-    dictionary = {}  
+    dictionary = {}
 
     for file_name in allowed_files:
-        file_path = os.path.join(data_path, file_name)
+        file_path = get_abs_path(data_path + file_name)
         print(file_path)
         
         with open(file_path, encoding="utf-8") as f:
