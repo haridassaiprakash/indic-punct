@@ -24,14 +24,12 @@ def load_data():
 
 # Load data into a dictionary
 dictionary = load_data()
-print(dictionary)
 
 def fuzzy_match_token(token, threshold=80):
     if token.isdigit():
         return token 
 
     result = process.extractOne(token, dictionary.keys(), scorer=fuzz.ratio)
-    print(result)
 
     if result and result[1] >= threshold:
         return dictionary[result[0]]
