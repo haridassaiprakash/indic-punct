@@ -1,18 +1,26 @@
+import os
 import csv
+import importlib
 from rapidfuzz import process, fuzz
-from inverse_text_normalization.gu.data_loader_utils import get_abs_path
 
 allowed_files = {"zero.tsv", "tens.tsv", "digit.tsv", "tens_en.tsv"}
-data_path = "data/numbers/"
 
-def load_data():
-    """Load only specific TSV files from the data folder for fuzzy matching."""
+def load_data(lang):
+    """Load language-specific fuzzy matching data dynamically."""
+    try:
+        data_loader_module = importlib.import_module(f"inverse_text_normalization.{lang}.data_loader_utils")
+        get_abs_path = data_loader_module.get_abs_path
+    except ModuleNotFoundError:
+        raise ImportError(f"Data loader not found for language: {lang}")
+
+    data_path = "data/numbers/"
     dictionary = {}
 
     for file_name in allowed_files:
-        file_path = get_abs_path(data_path + file_name)
-        print(file_path)
-        
+        file_path = get_abs_path(data_path + file_name)  # Correctly gets path for each language
+        if not os.path.exists(file_path):
+            continue
+
         with open(file_path, encoding="utf-8") as f:
             reader = csv.reader(f, delimiter="\t")  
             for row in reader:
@@ -22,10 +30,8 @@ def load_data():
 
     return dictionary
 
-# Load data into a dictionary
-dictionary = load_data()
-
-def fuzzy_match_token(token, threshold=80):
+def fuzzy_match_token(token, dictionary, threshold=80):
+    """Match a token using fuzzy search"""
     if token.isdigit():
         return token 
 
@@ -35,8 +41,10 @@ def fuzzy_match_token(token, threshold=80):
         return dictionary[result[0]]
     return token  
 
-def apply_fuzzy_search(text):
-    """Apply fuzzy matching"""
+def apply_fuzzy_search(text, lang):
+    """Apply fuzzy matching for a given language"""
+    dictionary = load_data(lang) # Load language-specific dictionary
+    print(dictionary)  
     words = text.split()
-    corrected_words = [fuzzy_match_token(word) for word in words]
+    corrected_words = [fuzzy_match_token(word, dictionary) for word in words]
     return " ".join(corrected_words)
