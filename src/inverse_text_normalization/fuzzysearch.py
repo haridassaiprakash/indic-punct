@@ -44,7 +44,6 @@ def fuzzy_match_token(token, dictionary, threshold=80):
 def apply_fuzzy_search(text, lang):
     """Apply fuzzy matching for a given language"""
     dictionary = load_data(lang) # Load language-specific dictionary
-    print(dictionary)  
     words = text.split()
     corrected_words = [fuzzy_match_token(word, dictionary) for word in words]
     return " ".join(corrected_words)
