@@ -58,87 +58,107 @@ def format_numbers_with_commas(sent, lang):
 
 def inverse_normalize_text(text_list, lang):
     if lang == 'hi':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = hi_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang=lang) for sent in itn_results]
         return itn_results_formatted
     elif lang in ['en', 'en_bio']:
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = en_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'ta':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = ta_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'or':
+        corrected_text_list = [apply_fuzzy_search(text,"ori") for text in text_list]
         itn_results = or_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'gu':
-        corrected_text_list = [apply_fuzzy_search(text) for text in text_list]
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = gu_itn(corrected_text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'te':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = te_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'mr':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = mr_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'pa':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = pa_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'bn':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = bn_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'ml':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = ml_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'as':
+        corrected_text_list = [apply_fuzzy_search(text,lang= 'asm') for text in text_list]
         itn_results = as_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted   
     elif lang == 'kn':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = kn_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'ur':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = ur_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'sa':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = sa_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'bho':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = bho_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'brx':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = brx_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'doi':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = doi_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'sat':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = sat_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'ks':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = ks_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'sd' :
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = sd_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'kok':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = kok_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
