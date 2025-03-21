@@ -73,7 +73,7 @@ def inverse_normalize_text(text_list, lang):
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'or':
-        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
+        corrected_text_list = [apply_fuzzy_search(text,"ori") for text in text_list]
         itn_results = or_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
