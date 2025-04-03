@@ -3,7 +3,7 @@ import csv
 import importlib
 from rapidfuzz import process, fuzz
 
-allowed_files = {"zero.tsv", "tens.tsv", "digit.tsv", "tens_en.tsv"}
+allowed_files = {"zero.tsv", "tens.tsv", "digit.tsv", "tens_en.tsv", "units.tsv"}
 
 def load_data(lang):
     """Load language-specific fuzzy matching data dynamically."""
@@ -17,17 +17,24 @@ def load_data(lang):
     dictionary = {}
 
     for file_name in allowed_files:
-        file_path = get_abs_path(data_path + file_name)  # Correctly gets path for each language
+        file_path = get_abs_path(data_path + file_name)
         if not os.path.exists(file_path):
             continue
 
         with open(file_path, encoding="utf-8") as f:
-            reader = csv.reader(f, delimiter="\t")  
-            for row in reader:
-                if len(row) == 2:
-                    alternative_spelling, correct_number = row
-                    dictionary[alternative_spelling] = correct_number  
+            reader = csv.reader(f, delimiter="\t")
 
+            if file_name == "units.tsv":
+                # Store unit words as keys with themselves as values
+                for row in reader:
+                    if row:  # Ensure the row is not empty
+                        unit_word = row[0].strip()
+                        dictionary[unit_word] = unit_word
+            else:
+                for row in reader:
+                    if len(row) == 2:
+                        alternative_spelling, correct_number = row
+                        dictionary[alternative_spelling.strip()] = correct_number.strip()
     return dictionary
 
 def fuzzy_match_token(token, dictionary, threshold=80):

@@ -79,7 +79,7 @@ class CardinalFst(GraphFst):
         cents_data = pynini.accep("शंभर") |  pynini.accep("शे") | pynini.accep("हंड्रेड") | pynini.accep("हन्ड्रड")
         thousands_data = pynini.accep("थाउज़न्ड") | pynini.accep("हज़ार") | pynini.accep("थाउज़ेंड") | pynini.accep("हजार") | pynini.accep("थाउजेंड") | pynini.accep("थाउजंड") | pynini.accep("थाउसंड")
         lakhs_data = pynini.accep("लाख") | pynini.accep("लैक") | pynini.accep("लेक") | pynini.accep("लक्ष") | pynini.accep("लॅक्स") | pynini.accep("लॅख") | pynini.accep("लॅखस")
-        crores_data = pynini.accep("कोटी") | pynini.accep("क्रोर")
+        crores_data = pynini.accep("कोटी") | pynini.accep("क्रोर") | pynini.accep("क्रोर्स")
         millions_data =  pynini.accep("मिलियन") | pynini.accep("मिलियंस") | pynini.accep("मिलियन्स")
         billions_data =  pynini.accep("बिलियन") | pynini.accep("बिलियंस") | pynini.accep("बिलियन्स")
 
@@ -88,7 +88,7 @@ class CardinalFst(GraphFst):
         hundred = pynini.cross("शंभर", "100") | pynini.cross("शे", "100") | pynini.cross("हंड्रेड", "100") | pynini.cross("हन्ड्रड", "100")
         thousand  = pynini.cross("हज़ार", "1000") | pynini.cross("थाउज़न्ड", "1000") | pynini.cross("थाउज़ेंड", "1000") | pynini.cross("थाउजेंड", "1000") | pynini.cross("हजार", "1000") | pynini.cross("थाउजंड", "1000") | pynini.accep("थाउसंड")
         lakh = pynini.cross("लाख", "100000") | pynini.cross("लैक", "100000") | pynini.cross("लेक", "100000") | pynini.cross("लक्ष", "100000") | pynini.cross("लैक", "100000") | pynini.cross("लॅख", "100000") | pynini.cross("लॅखस", "100000")
-        crore = pynini.cross("कोटी", "10000000") | pynini.cross("क्रोर", "10000000")
+        crore = pynini.cross("कोटी", "10000000") | pynini.cross("क्रोर", "10000000") | pynini.cross("क्रोर्स", "10000000")
         million =  pynini.cross("मिलियन", "1000000") | pynini.cross("मिलियंस", "1000000") | pynini.cross("मिलियन्स", "1000000")
         billion =  pynini.cross("बिलियन", "1000000000") | pynini.cross("बिलियंस", "1000000000") | pynini.cross("बिलियन्स", "1000000000")
 
