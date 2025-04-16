@@ -3,7 +3,7 @@ import csv
 import importlib
 from rapidfuzz import process, fuzz
 
-allowed_files = {"zero.tsv", "tens.tsv", "digit.tsv", "tens_en.tsv", "units.tsv"}
+allowed_files = {"zero.tsv", "tens.tsv", "digit.tsv", "tens-en.tsv", "units.tsv"}
 
 def load_data(lang):
     """Load language-specific fuzzy matching data dynamically."""

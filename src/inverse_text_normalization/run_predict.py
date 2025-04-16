@@ -21,7 +21,9 @@ from inverse_text_normalization.sat.run_predict import inverse_normalize_text as
 from inverse_text_normalization.ks.run_predict import inverse_normalize_text as ks_itn
 from inverse_text_normalization.sd.run_predict import inverse_normalize_text as sd_itn
 from inverse_text_normalization.kok.run_predict import inverse_normalize_text as kok_itn
-
+from inverse_text_normalization.mai.run_predict import inverse_normalize_text as mai_itn
+from inverse_text_normalization.mni.run_predict import inverse_normalize_text as mni_itn
+from inverse_text_normalization.ne.run_predict import inverse_normalize_text as ne_itn
 
 def format_numbers_with_commas(sent, lang):
     words = []
@@ -160,5 +162,20 @@ def inverse_normalize_text(text_list, lang):
     elif lang == 'kok':
         corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
         itn_results = kok_itn(corrected_text_list)
+        itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
+        return itn_results_formatted
+    elif lang == 'mai':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
+        itn_results = mai_itn(text_list)
+        itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
+        return itn_results_formatted
+    elif lang == 'mni':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
+        itn_results = mni_itn(text_list)
+        itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
+        return itn_results_formatted
+    elif lang == 'ne':
+        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
+        itn_results = ne_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
