@@ -34,7 +34,7 @@ def load_data(lang):
                 for row in reader:
                     if len(row) == 2:
                         alternative_spelling, correct_number = row
-                        dictionary[alternative_spelling.strip()] = correct_number.strip()
+                        dictionary[alternative_spelling.strip()] = alternative_spelling.strip()
     return dictionary
 
 def fuzzy_match_token(token, dictionary, threshold=80):
