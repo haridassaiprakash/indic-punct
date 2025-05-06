@@ -84,7 +84,7 @@ class FractionFst(GraphFst):
         
         graph_integer = pynutil.insert("integer_part: \"") + cardinal_graph + pynutil.insert("\"")
         
-        final_graph_wo_sign = graph_integer + (delete_space + del_And + delete_space | delete_space)  + graph_numerator + (delete_space + del_by + delete_space | delete_space) + graph_denominator
+        final_graph_wo_sign = graph_integer + (delete_space + del_And + delete_space | delete_space)  + graph_numerator + (delete_space + del_by + delete_space ) + graph_denominator
         final_graph = final_graph_wo_sign | get_quantity(
             final_graph_wo_sign, cardinal_graph_hundred_component_at_least_one_none_zero_digit
         )
