@@ -116,8 +116,7 @@ def inverse_normalize_text(text_list, lang, scriptcode=None):
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'ur':
-        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
-        itn_results = ur_itn(corrected_text_list)
+        itn_results = ur_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'sa':
@@ -141,8 +140,7 @@ def inverse_normalize_text(text_list, lang, scriptcode=None):
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'sat':
-        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
-        itn_results = sat_itn(corrected_text_list)
+        itn_results = sat_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'ks':
@@ -151,13 +149,11 @@ def inverse_normalize_text(text_list, lang, scriptcode=None):
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'sd' and scriptcode == 'Arab':
-        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
-        itn_results = sd_itn(corrected_text_list)
+        itn_results = sd_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'sd' :
-        corrected_text_list = [apply_fuzzy_search(text,lang = "sd_dev") for text in text_list]
-        itn_results = sd_dev_itn(corrected_text_list)
+        itn_results = sd_dev_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'kok':
@@ -166,13 +162,11 @@ def inverse_normalize_text(text_list, lang, scriptcode=None):
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'mai':
-        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
-        itn_results = mai_itn(corrected_text_list)
+        itn_results = mai_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'mni':
-        corrected_text_list = [apply_fuzzy_search(text,lang) for text in text_list]
-        itn_results = mni_itn(corrected_text_list)
+        itn_results = mni_itn(text_list)
         itn_results_formatted = [format_numbers_with_commas(sent=sent, lang='hi') for sent in itn_results]
         return itn_results_formatted
     elif lang == 'ne':
